@@ -1,0 +1,10 @@
+body {
+  display: flex;
+  font-family: "Permanent Marker", cursive;
+  justify-content: center;
+  align-items: center;
+}
+
+#sketch-holder {
+  margin-top: 1em;
+}
