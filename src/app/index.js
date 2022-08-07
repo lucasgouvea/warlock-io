@@ -2,41 +2,44 @@
 /* eslint-disable no-param-reassign */
 
 import p5 from 'p5';
+
+import Player from './player.js';
 import Position from './position.js';
+import PositionsMap from './positions-map.js';
 
-const CANVAS_WIDTH = 400;
-const CANVAS_HEIGHT = 400;
-const GRID_SIZE = 40;
-const INITIAL_POS = { x: 60, y: 60 };
-const positionsMap = new Map();
-const CIRCLE_RAIO = 5;
+class App {
+  player;
 
-class Player {
-  position = { x: INITIAL_POS.x, y: INITIAL_POS.y };
+  positionsMap;
 
-  mousePosition = { x: null, y: null };
+  static CANVAS_WIDTH = 400;
+
+  static CANVAS_HEIGHT = 400;
+
+  static GRID_SIZE = 40;
+
+  static CIRCLE_RADIUS = 5;
+
+  static INITIAL_POS = new Position(60, 60);
+
+  constructor() {
+    this.player = new Player(App.INITIAL_POS);
+    this.positionsMap = new PositionsMap();
+  }
 }
 
-const testPosition = new Position();
-
-const player = new Player();
-
-document.onmousemove = (e) => {
-  player.mousePosition.x = e.x - 440;
-  player.mousePosition.y = e.y - 140;
-};
-
 const sketch = (p) => {
+  const app = new App();
   p.setup = () => {
-    const canvas = p.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    const canvas = p.createCanvas(App.CANVAS_WIDTH, App.CANVAS_HEIGHT);
     canvas.parent('sketch-holder');
-    for (let x = 0; x < CANVAS_WIDTH; x += GRID_SIZE) {
-      for (let y = 0; y < CANVAS_HEIGHT; y += GRID_SIZE) {
-        positionsMap.set(`${x},${y}`, null);
-      }
-    }
 
-    positionsMap.set(`${INITIAL_POS.x},${INITIAL_POS.y}`, player);
+    app.positionsMap.set(app.player.position, app.player);
+
+    document.onmousemove = (e) => {
+      app.player.mousePosition.x = e.x - 440;
+      app.player.mousePosition.y = e.y - 140;
+    };
   };
 
   p.draw = () => {
@@ -44,31 +47,26 @@ const sketch = (p) => {
     p.stroke(0);
     p.strokeWeight(1);
 
-    for (let x = 0; x < CANVAS_WIDTH; x += GRID_SIZE) {
-      p.line(x, 0, x, CANVAS_HEIGHT);
+    for (let x = 0; x < App.CANVAS_WIDTH; x += App.GRID_SIZE) {
+      p.line(x, 0, x, App.CANVAS_HEIGHT);
     }
 
-    for (let y = 0; y < CANVAS_HEIGHT; y += GRID_SIZE) {
-      p.line(0, y, CANVAS_WIDTH, y);
+    for (let y = 0; y < App.CANVAS_HEIGHT; y += App.GRID_SIZE) {
+      p.line(0, y, App.CANVAS_WIDTH, y);
     }
 
-    for (const [key, value] of positionsMap) {
+    for (const [key, value] of app.positionsMap.map) {
       const [x, y] = key.split(',').map((e) => Number(e));
       if (value !== null) {
         p.circle(x, y, 20);
-        p.line(x, y, player.mousePosition.x, player.mousePosition.y); // distance between 2 points
-        p.line(x, y, player.mousePosition.x, y); // adjacent side
-        p.circle(player.mousePosition.x, player.mousePosition.y, CIRCLE_RAIO * 2); // opposite side
+        p.line(x, y, app.player.mousePosition.x, app.player.mousePosition.y); // distance between 2 points
+        p.line(x, y, app.player.mousePosition.x, y); // adjacent side
+        p.circle(app.player.mousePosition.x, app.player.mousePosition.y, App.CIRCLE_RADIUS * 2); // opposite side
 
-        /* const triangle = GeometryUtils.getRightTriangle(
-        { x, y },
-        { x: player.mousePosition.x, y: player.mousePosition.y },
-      ); */
+        const mousePosYIsBeneathPlayer = app.player.mousePosition.y - y > 0;
 
-        const mousePosYIsBeneathPlayer = player.mousePosition.y - y > 0;
-
-        const ca = player.mousePosition.x - x;
-        const co = Math.abs(player.mousePosition.y - y);
+        const ca = app.player.mousePosition.x - x;
+        const co = Math.abs(app.player.mousePosition.y - y);
         const m = co / ca;
 
         const angleRadians = Math.atan(m);
@@ -82,12 +80,12 @@ const sketch = (p) => {
 
         p.stroke(255, 0, 0);
         const h = Math.sqrt(ca ** 2 + co2 ** 2);
-        const yUn = (CIRCLE_RAIO * co2) / h;
-        const xUn = (CIRCLE_RAIO * ca) / h;
+        const yUn = (App.CIRCLE_RADIUS * co2) / h;
+        const xUn = (App.CIRCLE_RADIUS * ca) / h;
 
         const armX = x + xUn * 2;
         const armY = y + yUn * 2;
-        p.line(armX, armY, player.mousePosition.x, player.mousePosition.y);
+        p.line(armX, armY, app.player.mousePosition.x, app.player.mousePosition.y);
       }
     }
   };
@@ -98,28 +96,28 @@ const sketch = (p) => {
 
     switch (p.keyCode) {
       case 65:
-        newXPosition = player.position.x - GRID_SIZE;
-        positionsMap.set(`${player.position.x},${player.position.y}`, null);
-        player.position.x = newXPosition;
-        positionsMap.set(`${newXPosition},${player.position.y}`, player);
+        newXPosition = app.player.position.x - App.GRID_SIZE;
+        app.positionsMap.set(app.player.position, null);
+        app.player.position.x = newXPosition;
+        app.positionsMap.set({ ...app.player.position, x: newXPosition }, app.player);
         break;
       case 83:
-        newYPosition = player.position.y + GRID_SIZE;
-        positionsMap.set(`${player.position.x},${player.position.y}`, null);
-        player.position.y = newYPosition;
-        positionsMap.set(`${player.position.x},${newYPosition}`, player);
+        newYPosition = app.player.position.y + App.GRID_SIZE;
+        app.positionsMap.set(app.player.position, null);
+        app.player.position.y = newYPosition;
+        app.positionsMap.set({ ...app.player.position, y: newYPosition }, app.player);
         break;
       case 68:
-        newXPosition = player.position.x + GRID_SIZE;
-        positionsMap.set(`${player.position.x},${player.position.y}`, null);
-        player.position.x = newXPosition;
-        positionsMap.set(`${newXPosition},${player.position.y}`, player);
+        newXPosition = app.player.position.x + App.GRID_SIZE;
+        app.positionsMap.set(app.player.position, null);
+        app.player.position.x = newXPosition;
+        app.positionsMap.set({ ...app.player.position, x: newXPosition }, app.player);
         break;
       case 87:
-        newYPosition = player.position.y - GRID_SIZE;
-        positionsMap.set(`${player.position.x},${player.position.y}`, null);
-        player.position.y = newYPosition;
-        positionsMap.set(`${player.position.x},${newYPosition}`, player);
+        newYPosition = app.player.position.y - App.GRID_SIZE;
+        app.positionsMap.set(app.player.position, null);
+        app.player.position.y = newYPosition;
+        app.positionsMap.set({ ...app.player.position, y: newYPosition }, app.player);
         break;
       default: break;
     }
