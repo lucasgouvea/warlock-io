@@ -18,7 +18,6 @@ class Player {
 }
 
 const testPosition = new Position();
-console.log({ testPosition });
 
 const player = new Player();
 
