@@ -1,9 +1,10 @@
-import Position from './position.js';
+import Position from './position';
+import Player from './player';
 
 class PositionsMap {
-  map;
+  map: Map<string, any>;
 
-  constructor(width, height, gridSize) {
+  constructor(width: number, height: number, gridSize: number) {
     this.map = new Map();
     for (let x = 0; x < width; x += gridSize) {
       for (let y = 0; y < height; y += gridSize) {
@@ -12,15 +13,12 @@ class PositionsMap {
     }
   }
 
-  set(position, player) {
+  set(position: Position, player: Player) {
     this.map.set(`${position.x},${position.y}`, player);
   }
 
-  get({ x, y }) {
+  get({ x, y }: Position) {
     const position = this.map.get(`${x},${y}`);
-    if (position === undefined) {
-      throw new Error(`Invalid posiiton access: ${position}`);
-    }
     return position;
   }
 }

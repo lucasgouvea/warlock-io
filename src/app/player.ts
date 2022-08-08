@@ -1,11 +1,11 @@
-import Position from './position.js';
+import Position from './position';
 
 class Player {
-  mousePosition;
+  mousePosition: Position;
 
-  position;
+  position: Position;
 
-  constructor(position) {
+  constructor(position: Position) {
     this.position = position;
     this.mousePosition = new Position(0, 0);
   }

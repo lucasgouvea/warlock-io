@@ -1,11 +1,11 @@
 /* eslint-disable no-new */
 /* eslint-disable no-param-reassign */
 
-import p5 from 'p5';
+import P5 from 'p5';
 
-import Player from './player.js';
-import Position from './position.js';
-import PositionsMap from './positions-map.js';
+import Player from './player';
+import Position from './position';
+import PositionsMap from './positions-map';
 
 class App {
   player;
@@ -24,7 +24,11 @@ class App {
 
   constructor() {
     this.player = new Player(App.INITIAL_POS);
-    this.positionsMap = new PositionsMap();
+    this.positionsMap = new PositionsMap(
+      App.CANVAS_WIDTH,
+      App.CANVAS_HEIGHT,
+      App.GRID_SIZE,
+    );
   }
 }
 
@@ -126,5 +130,4 @@ const sketch = (p) => {
 
 const containerElement = document.getElementById('sketch-holder');
 
-// eslint-disable-next-line new-cap
-new p5(sketch, containerElement);
+new P5(sketch, containerElement);

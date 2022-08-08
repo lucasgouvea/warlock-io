@@ -1,13 +1,23 @@
+import Position from './position';
+
 class RightTriangle {
-  originalPosition;
+  private originalPosition: Position;
 
-  targetPosition;
+  private targetPosition: Position;
 
-  angle;
+  private angle: number;
 
-  oppositeSide;
+  private angleRadians: number;
 
-  angularCoeficient;
+  private angleComplementRadians: number;
+
+  private oppositeSide: number;
+
+  private adjacentSide: number;
+
+  private angularCoeficient: number;
+
+  static NINETY_DEGREES_IN_RADIANS = Math.PI / 2;
 
   constructor(originalPosition, targetPosition) {
     this.originalPosition = originalPosition;
@@ -16,7 +26,7 @@ class RightTriangle {
     this.oppositeSide = Math.abs(targetPosition.y - originalPosition.y);
     this.angularCoeficient = this.oppositeSide / this.adjacentSide;
     this.angleRadians = Math.atan(this.angularCoeficient);
-    this.angleComplementRadians = Math.PI / 2 - this.angleRadians;
+    this.angleComplementRadians = RightTriangle.NINETY_DEGREES_IN_RADIANS - this.angleRadians;
   }
 }
 
