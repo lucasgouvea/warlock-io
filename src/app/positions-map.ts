@@ -13,7 +13,7 @@ class PositionsMap {
     }
   }
 
-  set(position: Position, player: Player) {
+  set(position: Position, player: Player | null) {
     this.map.set(`${position.x},${position.y}`, player);
   }
 
