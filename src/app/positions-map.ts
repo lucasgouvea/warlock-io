@@ -1,25 +1,30 @@
 import Position from './position';
-import Player from './player';
+import { Player, Element } from './elements';
 
 class PositionsMap {
-  map: Map<string, any>;
+  map: Map<string, Element | null>;
 
   constructor(width: number, height: number, gridSize: number) {
     this.map = new Map();
     for (let x = 0; x < width; x += gridSize) {
       for (let y = 0; y < height; y += gridSize) {
-        this.set(new Position(x, y), null);
+        this.clear(new Position(x, y));
       }
     }
   }
 
-  set(position: Position, player: Player | null) {
-    this.map.set(`${position.x},${position.y}`, player);
+  public clear(position: Position): void {
+    this.map.set(`${position.x},${position.y}`, null);
   }
 
-  get({ x, y }: Position) {
-    const position = this.map.get(`${x},${y}`);
-    return position;
+  public set(element: Element): void {
+    const { x, y } = element.getPosition();
+    this.map.set(`${x},${y}`, element);
+  }
+
+  public get({ x, y }: Position): Element | null {
+    const element = this.map.get(`${x},${y}`);
+    return element ?? null;
   }
 }
 

@@ -4,7 +4,7 @@
 import P5 from 'p5';
 import GeometryUtils from './geometry-utils';
 
-import Player from './player';
+import Player from './elements/player';
 import Position from './position';
 import PositionsMap from './positions-map';
 
@@ -38,22 +38,21 @@ class App {
     this.geometryUtils = new GeometryUtils(p);
   }
 
-  public setup(): void {
-    const canvas = this.p.createCanvas(App.CANVAS_WIDTH, App.CANVAS_HEIGHT);
+  public setup(p: P5): void {
+    const canvas = p.createCanvas(App.CANVAS_WIDTH, App.CANVAS_HEIGHT);
     canvas.parent('sketch-holder');
-
-    this.positionsMap.set(this.player.position, this.player);
+    this.positionsMap.set(this.player);
 
     // @ts-ignore
     document.onmousemove = (e) => {
-      this.player.mousePosition.x = e.x - 440;
-      this.player.mousePosition.y = e.y - 140;
+      const position = new Position(e.x - 440, e.y - 140);
+      this.player.setMousePosition(position);
     };
   }
 
-  public draw(): void {
+  public draw(p5: p5): void {
     this.drawGrid();
-    this.drawMapElements();
+    this.drawMapElements(p5);
   }
 
   private drawGrid(): void {
@@ -70,17 +69,17 @@ class App {
     }
   }
 
-  private drawMapElements(): void {
+  private drawMapElements(p5: p5): void {
     for (const [key, value] of this.positionsMap.map) {
       const [x, y] = key.split(',').map((e) => Number(e));
       if (value !== null) {
-        this.p.circle(x, y, 20);
+        this.player.draw(p5);
 
-        this.p.circle(
+        /*         this.p.circle(
           this.player.mousePosition.x,
           this.player.mousePosition.y,
           App.CIRCLE_RADIUS * 2,
-        );
+        ); */
 
         const rightTriangle = this.geometryUtils.getRightTriangle(
           new Position(x, y),
@@ -88,7 +87,7 @@ class App {
         );
 
         rightTriangle.draw();
-        const mousePosYIsBeneathPlayer = this.player.mousePosition.y - y > 0;
+        /* const mousePosYIsBeneathPlayer = this.player.mousePosition.y - y > 0;
 
         const ca = this.player.mousePosition.x - x;
         const co = Math.abs(this.player.mousePosition.y - y);
@@ -118,21 +117,20 @@ class App {
           armY,
           this.player.mousePosition.x,
           this.player.mousePosition.y,
-        );
+        ); */
       }
     }
   }
 }
 
-const sketch = (p: P5) => {
-  const app = new App(p);
+const sketch = (p5: P5) => {
+  const app = new App(p5);
 
-  p.setup = () => {
-    const canvas = p.createCanvas(App.CANVAS_WIDTH, App.CANVAS_HEIGHT);
-    canvas.parent('sketch-holder');
+  p5.setup = () => {
+    app.setup(p5);
   };
-  p.draw = () => {
-    app.draw();
+  p5.draw = () => {
+    app.draw(p5);
   };
 
 /*   p.keyPressed = () => {
