@@ -1,5 +1,5 @@
 import P5 from 'p5';
-import Position from './position';
+import Position from '../position';
 
 class RightTriangle {
   private originalPosition: Position;
@@ -31,19 +31,22 @@ class RightTriangle {
     this.p5 = p5;
   }
 
-  draw() {
+  draw(mousePositionY: number) {
+    const { x, y } = this.originalPosition;
+    const { x: targetX, y: targetY } = this.targetPosition;
+    const { adjacentSide } = this;
+
+    const mousePosYIsBeneathPlayer = mousePositionY - y > 0;
+
+    this.p5.line(x, y, targetX, targetY); // distance between 2 points
+    this.p5.line(x, y, targetX, y); // adjacent side
+
     this.p5.line(
-      this.originalPosition.x,
-      this.originalPosition.y,
-      this.targetPosition.x,
-      this.targetPosition.y,
-    ); // distance between 2 points
-    this.p5.line(
-      this.originalPosition.x,
-      this.originalPosition.y,
-      this.targetPosition.x,
-      this.originalPosition.y,
-    ); // adjacent side
+      x + adjacentSide,
+      y,
+      x + adjacentSide,
+      mousePosYIsBeneathPlayer ? y + this.oppositeSide : y - this.oppositeSide,
+    ); // opposite side
   }
 }
 

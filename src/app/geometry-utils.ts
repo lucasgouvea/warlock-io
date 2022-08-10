@@ -1,7 +1,7 @@
 import P5 from 'p5';
 
 import Position from './position';
-import RightTriangle from './right-triangle';
+import RightTriangle from './drawings/right-triangle';
 
 class GeometryUtils {
   private p5: P5;

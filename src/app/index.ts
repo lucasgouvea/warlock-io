@@ -23,8 +23,6 @@ class App {
 
   static GRID_SIZE = 40;
 
-  static CIRCLE_RADIUS = 5;
-
   static INITIAL_POS = new Position(60, 60);
 
   constructor(p: P5) {
@@ -75,19 +73,11 @@ class App {
       if (value !== null) {
         this.player.draw(p5);
 
-        /*         this.p.circle(
-          this.player.mousePosition.x,
-          this.player.mousePosition.y,
-          App.CIRCLE_RADIUS * 2,
-        ); */
+        this.geometryUtils
+          .getRightTriangle(new Position(x, y), this.player.getMousePosition())
+          .draw(this.player.getMousePosition().y);
 
-        const rightTriangle = this.geometryUtils.getRightTriangle(
-          new Position(x, y),
-          this.player.getMousePosition(),
-        );
-
-        rightTriangle.draw();
-        /* const mousePosYIsBeneathPlayer = this.player.mousePosition.y - y > 0;
+        /*
 
         const ca = this.player.mousePosition.x - x;
         const co = Math.abs(this.player.mousePosition.y - y);
@@ -97,12 +87,6 @@ class App {
         const complementAngleRadians = Math.PI / 2 - angleRadians;
         const co2 = Math.tan(complementAngleRadians) * ca;
 
-        this.p.line(
-          x + ca,
-          y,
-          x + ca,
-          mousePosYIsBeneathPlayer ? y + co : y - co,
-        );
         this.p.stroke(80, 204, 44);
 
         this.p.stroke(255, 0, 0);
