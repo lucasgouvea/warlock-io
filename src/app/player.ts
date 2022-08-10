@@ -9,6 +9,10 @@ class Player {
     this.position = position;
     this.mousePosition = new Position(0, 0);
   }
+
+  public getMousePosition(): Position {
+    return this.getMousePosition();
+  }
 }
 
 export default Player;

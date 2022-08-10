@@ -2,17 +2,20 @@
 /* eslint-disable no-param-reassign */
 
 import P5 from 'p5';
+import GeometryUtils from './geometry-utils';
 
 import Player from './player';
 import Position from './position';
 import PositionsMap from './positions-map';
 
 class App {
-  player: Player;
+  private player: Player;
 
-  positionsMap: PositionsMap;
+  private positionsMap: PositionsMap;
 
-  p: P5;
+  private p: P5;
+
+  private geometryUtils: GeometryUtils;
 
   static CANVAS_WIDTH = 400;
 
@@ -32,6 +35,7 @@ class App {
       App.GRID_SIZE,
     );
     this.p = p;
+    this.geometryUtils = new GeometryUtils(p);
   }
 
   public setup(): void {
@@ -48,6 +52,11 @@ class App {
   }
 
   public draw(): void {
+    this.drawGrid();
+    this.drawMapElements();
+  }
+
+  private drawGrid(): void {
     this.p.background(220);
     this.p.stroke(0);
     this.p.strokeWeight(1);
@@ -59,19 +68,26 @@ class App {
     for (let y = 0; y < App.CANVAS_HEIGHT; y += App.GRID_SIZE) {
       this.p.line(0, y, App.CANVAS_WIDTH, y);
     }
+  }
 
+  private drawMapElements(): void {
     for (const [key, value] of this.positionsMap.map) {
       const [x, y] = key.split(',').map((e) => Number(e));
       if (value !== null) {
         this.p.circle(x, y, 20);
-        this.p.line(x, y, this.player.mousePosition.x, this.player.mousePosition.y); // distance between 2 points
-        this.p.line(x, y, this.player.mousePosition.x, y); // adjacent side
+
         this.p.circle(
           this.player.mousePosition.x,
           this.player.mousePosition.y,
           App.CIRCLE_RADIUS * 2,
-        ); // opposite side
+        );
 
+        const rightTriangle = this.geometryUtils.getRightTriangle(
+          new Position(x, y),
+          this.player.getMousePosition(),
+        );
+
+        rightTriangle.draw();
         const mousePosYIsBeneathPlayer = this.player.mousePosition.y - y > 0;
 
         const ca = this.player.mousePosition.x - x;
@@ -82,10 +98,13 @@ class App {
         const complementAngleRadians = Math.PI / 2 - angleRadians;
         const co2 = Math.tan(complementAngleRadians) * ca;
 
-        this.p.line(x + ca, y, x + ca, mousePosYIsBeneathPlayer ? y + co : y - co);
+        this.p.line(
+          x + ca,
+          y,
+          x + ca,
+          mousePosYIsBeneathPlayer ? y + co : y - co,
+        );
         this.p.stroke(80, 204, 44);
-        /* line(x, y, x + ca, y + co2) */
-        /* line(x + ca, y, x + ca, mousePosYisBeneathPlayer ? y - co2 : y + co2); */
 
         this.p.stroke(255, 0, 0);
         const h = Math.sqrt(ca ** 2 + co2 ** 2);
@@ -108,12 +127,15 @@ class App {
 const sketch = (p: P5) => {
   const app = new App(p);
 
-  // @ts-ignore
-  p.setup = app.setup();
-  // @ts-ignore
-  p.draw = app.draw();
+  p.setup = () => {
+    const canvas = p.createCanvas(App.CANVAS_WIDTH, App.CANVAS_HEIGHT);
+    canvas.parent('sketch-holder');
+  };
+  p.draw = () => {
+    app.draw();
+  };
 
-  p.keyPressed = () => {
+/*   p.keyPressed = () => {
     let newXPosition;
     let newYPosition;
 
@@ -157,10 +179,7 @@ const sketch = (p: P5) => {
       default:
         break;
     }
-  };
+  }; */
 };
 
-// @ts-ignore
-const containerElement = document.getElementById('sketch-holder');
-
-new P5(sketch, containerElement);
+new P5(sketch);

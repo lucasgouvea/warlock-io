@@ -1,15 +1,14 @@
 {
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "rootDir": "./src/app",
+    "sourceMap": true,
+    "target": "es2015",
+    "moduleResolution": "node",
+    "module": "ESNext"
   },
-  "include": ["src"],
-  "exclude": ["node_modules"],
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    }
-  },
+  "types": ["p5/global"],
 }

@@ -23,5 +23,6 @@ module.exports = {
     'import/extensions': 0,
     'no-undef': 0,
     'no-unused-vars': 0,
+    'class-methods-use-this': 0,
   },
 };
