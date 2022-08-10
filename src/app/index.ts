@@ -7,40 +7,38 @@ import GeometryUtils from './geometry-utils';
 import Player from './elements/player';
 import Position from './position';
 import PositionsMap from './positions-map';
+import Config from './config';
+import InputHandler from './input-handler';
 
 class App {
   private player: Player;
 
   private positionsMap: PositionsMap;
 
-  private p: P5;
+  private p5: P5;
 
   private geometryUtils: GeometryUtils;
 
-  static CANVAS_WIDTH = 400;
-
-  static CANVAS_HEIGHT = 400;
-
-  static GRID_SIZE = 40;
-
-  static INITIAL_POS = new Position(60, 60);
+  private inputHandler: InputHandler;
 
   constructor(p5: P5) {
-    this.player = new Player(App.INITIAL_POS, p5);
+    this.player = new Player(Config.INITIAL_POS, p5);
     this.positionsMap = new PositionsMap(
-      App.CANVAS_WIDTH,
-      App.CANVAS_HEIGHT,
-      App.GRID_SIZE,
+      Config.CANVAS_WIDTH,
+      Config.CANVAS_HEIGHT,
+      Config.GRID_SIZE,
     );
-    this.p = p5;
+    this.p5 = p5;
     this.geometryUtils = new GeometryUtils(p5);
+    this.inputHandler = new InputHandler(p5, this.player, this.positionsMap);
   }
 
   public setup(p: P5): void {
-    const canvas = p.createCanvas(App.CANVAS_WIDTH, App.CANVAS_HEIGHT);
+    const canvas = p.createCanvas(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT);
     canvas.parent('sketch-holder');
     this.positionsMap.set(this.player);
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     document.onmousemove = (e) => {
       const position = new Position(e.x - 440, e.y - 140);
@@ -54,16 +52,16 @@ class App {
   }
 
   private drawGrid(): void {
-    this.p.background(220);
-    this.p.stroke(0);
-    this.p.strokeWeight(1);
+    this.p5.background(220);
+    this.p5.stroke(0);
+    this.p5.strokeWeight(1);
 
-    for (let x = 0; x < App.CANVAS_WIDTH; x += App.GRID_SIZE) {
-      this.p.line(x, 0, x, App.CANVAS_HEIGHT);
+    for (let x = 0; x < Config.CANVAS_WIDTH; x += Config.GRID_SIZE) {
+      this.p5.line(x, 0, x, Config.CANVAS_HEIGHT);
     }
 
-    for (let y = 0; y < App.CANVAS_HEIGHT; y += App.GRID_SIZE) {
-      this.p.line(0, y, App.CANVAS_WIDTH, y);
+    for (let y = 0; y < Config.CANVAS_HEIGHT; y += Config.GRID_SIZE) {
+      this.p5.line(0, y, Config.CANVAS_WIDTH, y);
     }
   }
 
@@ -73,14 +71,20 @@ class App {
       if (value !== null) {
         this.player.draw(p5);
 
-        const rightTriangle = this.geometryUtils
-          .getRightTriangle(new Position(x, y), this.player.getMousePosition());
+        const rightTriangle = this.geometryUtils.getRightTriangle(
+          new Position(x, y),
+          this.player.getMousePosition(),
+        );
 
         rightTriangle.draw(this.player.getMousePosition().y);
 
         this.player.drawArm(rightTriangle);
       }
     }
+  }
+
+  public keyPressed(): void {
+    this.inputHandler.keyPressed();
   }
 }
 
@@ -94,51 +98,9 @@ const sketch = (p5: P5) => {
     app.draw(p5);
   };
 
-/*   p.keyPressed = () => {
-    let newXPosition;
-    let newYPosition;
-
-    switch (p.keyCode) {
-      case 65:
-        newXPosition = app.player.position.x - App.GRID_SIZE;
-        app.positionsMap.set(app.player.position, null);
-        app.player.position.x = newXPosition;
-        app.positionsMap.set(
-          { ...app.player.position, x: newXPosition },
-          app.player,
-        );
-        break;
-      case 83:
-        newYPosition = app.player.position.y + App.GRID_SIZE;
-        app.positionsMap.set(app.player.position, null);
-        app.player.position.y = newYPosition;
-        app.positionsMap.set(
-          { ...app.player.position, y: newYPosition },
-          app.player,
-        );
-        break;
-      case 68:
-        newXPosition = app.player.position.x + App.GRID_SIZE;
-        app.positionsMap.set(app.player.position, null);
-        app.player.position.x = newXPosition;
-        app.positionsMap.set(
-          { ...app.player.position, x: newXPosition },
-          app.player,
-        );
-        break;
-      case 87:
-        newYPosition = app.player.position.y - App.GRID_SIZE;
-        app.positionsMap.set(app.player.position, null);
-        app.player.position.y = newYPosition;
-        app.positionsMap.set(
-          { ...app.player.position, y: newYPosition },
-          app.player,
-        );
-        break;
-      default:
-        break;
-    }
-  }; */
+  p5.keyPressed = () => {
+    app.keyPressed();
+  };
 };
 
 new P5(sketch);

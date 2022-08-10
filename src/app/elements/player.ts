@@ -53,6 +53,10 @@ class Player extends Element {
   public setMousePosition(position: Position) {
     this.mousePosition = position;
   }
+
+  public setPosition(position: Position) {
+    this.position = position;
+  }
 }
 
 export default Player;
