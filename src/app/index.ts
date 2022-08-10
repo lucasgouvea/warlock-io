@@ -25,15 +25,15 @@ class App {
 
   static INITIAL_POS = new Position(60, 60);
 
-  constructor(p: P5) {
-    this.player = new Player(App.INITIAL_POS);
+  constructor(p5: P5) {
+    this.player = new Player(App.INITIAL_POS, p5);
     this.positionsMap = new PositionsMap(
       App.CANVAS_WIDTH,
       App.CANVAS_HEIGHT,
       App.GRID_SIZE,
     );
-    this.p = p;
-    this.geometryUtils = new GeometryUtils(p);
+    this.p = p5;
+    this.geometryUtils = new GeometryUtils(p5);
   }
 
   public setup(p: P5): void {
@@ -73,35 +73,12 @@ class App {
       if (value !== null) {
         this.player.draw(p5);
 
-        this.geometryUtils
-          .getRightTriangle(new Position(x, y), this.player.getMousePosition())
-          .draw(this.player.getMousePosition().y);
+        const rightTriangle = this.geometryUtils
+          .getRightTriangle(new Position(x, y), this.player.getMousePosition());
 
-        /*
+        rightTriangle.draw(this.player.getMousePosition().y);
 
-        const ca = this.player.mousePosition.x - x;
-        const co = Math.abs(this.player.mousePosition.y - y);
-        const m = co / ca;
-
-        const angleRadians = Math.atan(m);
-        const complementAngleRadians = Math.PI / 2 - angleRadians;
-        const co2 = Math.tan(complementAngleRadians) * ca;
-
-        this.p.stroke(80, 204, 44);
-
-        this.p.stroke(255, 0, 0);
-        const h = Math.sqrt(ca ** 2 + co2 ** 2);
-        const yUn = (App.CIRCLE_RADIUS * co2) / h;
-        const xUn = (App.CIRCLE_RADIUS * ca) / h;
-
-        const armX = x + xUn * 2;
-        const armY = y + yUn * 2;
-        this.p.line(
-          armX,
-          armY,
-          this.player.mousePosition.x,
-          this.player.mousePosition.y,
-        ); */
+        this.player.drawArm(rightTriangle);
       }
     }
   }

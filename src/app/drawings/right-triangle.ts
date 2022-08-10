@@ -2,21 +2,21 @@ import P5 from 'p5';
 import Position from '../position';
 
 class RightTriangle {
-  private originalPosition: Position;
+  public originalPosition: Position;
 
-  private targetPosition: Position;
+  public targetPosition: Position;
 
-  private angleRadians: number;
+  public angleRadians: number;
 
-  private angleComplementRadians: number;
+  public angleComplementRadians: number;
 
-  private oppositeSide: number;
+  public oppositeSide: number;
 
-  private adjacentSide: number;
+  public adjacentSide: number;
 
-  private angularCoeficient: number;
+  public angularCoeficient: number;
 
-  private p5: P5;
+  public p5: P5;
 
   static NINETY_DEGREES_IN_RADIANS = Math.PI / 2;
 
@@ -31,7 +31,7 @@ class RightTriangle {
     this.p5 = p5;
   }
 
-  draw(mousePositionY: number) {
+  public draw(mousePositionY: number): void {
     const { x, y } = this.originalPosition;
     const { x: targetX, y: targetY } = this.targetPosition;
     const { adjacentSide } = this;
