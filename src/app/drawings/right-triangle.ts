@@ -1,5 +1,6 @@
 import P5 from 'p5';
 import Position from '../position';
+import Config from '../config';
 
 class RightTriangle {
   public originalPosition: Position;
@@ -18,6 +19,8 @@ class RightTriangle {
 
   public p5: P5;
 
+  private hidden: boolean;
+
   static NINETY_DEGREES_IN_RADIANS = Math.PI / 2;
 
   constructor(originalPosition: Position, targetPosition: Position, p5: p5) {
@@ -29,16 +32,19 @@ class RightTriangle {
     this.angleRadians = Math.atan(this.angularCoeficient);
     this.angleComplementRadians = RightTriangle.NINETY_DEGREES_IN_RADIANS - this.angleRadians;
     this.p5 = p5;
+    this.hidden = Config.TRIANGLE_HIDDEN;
   }
 
   public draw(): void {
-    const { x, y } = this.originalPosition;
-    const { x: targetX, y: targetY } = this.targetPosition;
+    if (this.hidden !== true) {
+      const { x, y } = this.originalPosition;
+      const { x: targetX, y: targetY } = this.targetPosition;
 
-    this.p5.line(x, y, targetX, targetY); // distance between 2 points
-    this.p5.line(x, y, targetX, y); // adjacent side
+      this.p5.line(x, y, targetX, targetY); // distance between 2 points
+      this.p5.line(x, y, targetX, y); // adjacent side
 
-    this.p5.line(targetX, y, targetX, targetY); // opposite side
+      this.p5.line(targetX, y, targetX, targetY); // opposite side
+    }
   }
 
   public setOriginalPosition(position: Position): void {
