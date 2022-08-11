@@ -5,32 +5,41 @@ import Element from './element';
 class Player extends Element {
   private mousePosition: Position;
 
+  private rightTriangle: RightTriangle;
+
+  private p5: p5;
+
   readonly CIRCLE_RADIUS: number = 5;
 
-  constructor(position: Position, private p5: p5) {
+  constructor(position: Position, p5: p5) {
     super(position);
     this.mousePosition = new Position(0, 0);
+    this.p5 = p5;
+    this.rightTriangle = new RightTriangle(
+      position,
+      this.mousePosition,
+      this.p5,
+    );
   }
 
   public getMousePosition(): Position {
     return this.mousePosition;
   }
 
-  public draw(p5: p5) {
+  public draw() {
     const { x, y } = this.position;
     const { x: xMouse, y: yMouse } = this.mousePosition;
-    p5.circle(x, y, 20);
-    p5.circle(xMouse, yMouse, this.CIRCLE_RADIUS * 2);
+    this.p5.circle(x, y, 20);
+    this.p5.circle(xMouse, yMouse, this.CIRCLE_RADIUS * 2);
+    this.rightTriangle.draw();
   }
 
-  public drawArm(rightTriangle: RightTriangle): void {
+  public drawArm(): void {
     const {
       angleComplementRadians,
       adjacentSide,
       originalPosition: { x, y },
-    } = rightTriangle;
-    this.p5.stroke(80, 204, 44);
-    this.p5.stroke(255, 0, 0);
+    } = this.rightTriangle;
 
     const oppositeSide = Math.tan(angleComplementRadians) * adjacentSide;
     const hypotenuse = Math.sqrt(adjacentSide ** 2 + oppositeSide ** 2);
@@ -52,10 +61,12 @@ class Player extends Element {
 
   public setMousePosition(position: Position) {
     this.mousePosition = position;
+    this.rightTriangle.setTargetPosition(this.mousePosition);
   }
 
   public setPosition(position: Position) {
     this.position = position;
+    this.rightTriangle.setOriginalPosition(this.position);
   }
 }
 

@@ -20,7 +20,7 @@ class RightTriangle {
 
   static NINETY_DEGREES_IN_RADIANS = Math.PI / 2;
 
-  constructor(originalPosition: Position, targetPosition: Position, p5: P5) {
+  constructor(originalPosition: Position, targetPosition: Position, p5: p5) {
     this.originalPosition = originalPosition;
     this.targetPosition = targetPosition;
     this.adjacentSide = Math.abs(targetPosition.x - originalPosition.x);
@@ -31,22 +31,22 @@ class RightTriangle {
     this.p5 = p5;
   }
 
-  public draw(mousePositionY: number): void {
+  public draw(): void {
     const { x, y } = this.originalPosition;
     const { x: targetX, y: targetY } = this.targetPosition;
-    const { adjacentSide } = this;
-
-    const mousePosYIsBeneathPlayer = mousePositionY - y > 0;
 
     this.p5.line(x, y, targetX, targetY); // distance between 2 points
     this.p5.line(x, y, targetX, y); // adjacent side
 
-    this.p5.line(
-      x + adjacentSide,
-      y,
-      x + adjacentSide,
-      mousePosYIsBeneathPlayer ? y + this.oppositeSide : y - this.oppositeSide,
-    ); // opposite side
+    this.p5.line(targetX, y, targetX, targetY); // opposite side
+  }
+
+  public setOriginalPosition(position: Position): void {
+    this.originalPosition = position;
+  }
+
+  public setTargetPosition(position: Position): void {
+    this.targetPosition = position;
   }
 }
 

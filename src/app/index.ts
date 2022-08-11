@@ -46,9 +46,9 @@ class App {
     };
   }
 
-  public draw(p5: p5): void {
+  public draw(): void {
     this.drawGrid();
-    this.drawMapElements(p5);
+    this.drawMapElements();
   }
 
   private drawGrid(): void {
@@ -65,20 +65,11 @@ class App {
     }
   }
 
-  private drawMapElements(p5: p5): void {
+  private drawMapElements(): void {
     for (const [key, value] of this.positionsMap.map) {
-      const [x, y] = key.split(',').map((e) => Number(e));
       if (value !== null) {
-        this.player.draw(p5);
-
-        const rightTriangle = this.geometryUtils.getRightTriangle(
-          new Position(x, y),
-          this.player.getMousePosition(),
-        );
-
-        rightTriangle.draw(this.player.getMousePosition().y);
-
-        this.player.drawArm(rightTriangle);
+        this.player.draw();
+        this.player.drawArm();
       }
     }
   }
@@ -95,7 +86,7 @@ const sketch = (p5: P5) => {
     app.setup(p5);
   };
   p5.draw = () => {
-    app.draw(p5);
+    app.draw();
   };
 
   p5.keyPressed = () => {
