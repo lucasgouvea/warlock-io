@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./src/index.mjs",
-    "dev": "nodemon --exec npm start",
+    "start": "npx webpack --mode production && ts-node ./src/index.mjs",
+    "dev": "nodemon --exec npm start -e js,json,ts",
     "build": "npx webpack --mode production"
   },
   "author": "",

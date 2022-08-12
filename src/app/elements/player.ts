@@ -7,6 +7,8 @@ class Player extends Element {
 
   private rightTriangle: RightTriangle;
 
+  private rightTriangle2: RightTriangle | null;
+
   private p5: p5;
 
   readonly CIRCLE_RADIUS: number = 5;
@@ -20,6 +22,7 @@ class Player extends Element {
       this.mousePosition,
       this.p5,
     );
+    this.rightTriangle2 = null;
   }
 
   public getMousePosition(): Position {
@@ -27,6 +30,8 @@ class Player extends Element {
   }
 
   public draw() {
+    this.p5.stroke(0);
+    this.p5.strokeWeight(1);
     const { x, y } = this.position;
     const { x: xMouse, y: yMouse } = this.mousePosition;
     this.p5.circle(x, y, 20);
@@ -35,6 +40,8 @@ class Player extends Element {
   }
 
   public drawArm(): void {
+    this.p5.stroke(0);
+    this.p5.strokeWeight(5);
     const {
       angleComplementRadians,
       adjacentSide,
@@ -51,22 +58,57 @@ class Player extends Element {
     // why 2?
     const armX = x + x2 * 2;
     const armY = y + y2 * 2;
-    this.p5.line(
-      armX,
-      armY,
-      this.getMousePosition().x,
-      this.getMousePosition().y,
+
+    this.rightTriangle2 = new RightTriangle(
+      new Position(armX, armY),
+      this.mousePosition,
+      this.p5,
     );
+
+    const {
+      originalPosition: op,
+      targetPosition: tp,
+      angleRadians: angleRadians2,
+    } = this.rightTriangle2;
+
+    this.rightTriangle2.draw();
+
+    // stick length
+    const hypotenuse2 = 25;
+
+    // similarity of triangles again
+    const adjacentSide2 = Math.cos(angleRadians2) * hypotenuse2;
+    const oppositeSide2 = Math.sin(angleRadians2) * hypotenuse2;
+
+    const isTPxGreaterThanOPx = tp.x > op.x;
+    const isTPyGreaterThanOPy = tp.y > op.y;
+
+    const stickX = isTPxGreaterThanOPx
+      ? op.x + adjacentSide2
+      : op.x - adjacentSide2;
+    const stickY = isTPyGreaterThanOPy
+      ? op.y + oppositeSide2
+      : op.y - oppositeSide2;
+
+    this.p5.line(op.x, op.y, stickX, stickY);
   }
 
   public setMousePosition(position: Position) {
     this.mousePosition = position;
-    this.rightTriangle.setTargetPosition(this.mousePosition);
+    this.rightTriangle = new RightTriangle(
+      this.position,
+      this.mousePosition,
+      this.p5,
+    );
   }
 
   public setPosition(position: Position) {
     this.position = position;
-    this.rightTriangle.setOriginalPosition(this.position);
+    this.rightTriangle = new RightTriangle(
+      this.position,
+      this.mousePosition,
+      this.p5,
+    );
   }
 }
 

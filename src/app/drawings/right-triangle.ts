@@ -46,14 +46,6 @@ class RightTriangle {
       this.p5.line(targetX, y, targetX, targetY); // opposite side
     }
   }
-
-  public setOriginalPosition(position: Position): void {
-    this.originalPosition = position;
-  }
-
-  public setTargetPosition(position: Position): void {
-    this.targetPosition = position;
-  }
 }
 
 export default RightTriangle;

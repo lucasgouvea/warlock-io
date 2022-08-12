@@ -12,7 +12,7 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
-    'eslint:recommended', 
+    'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
   ],
   plugins: ['@typescript-eslint'],
@@ -30,5 +30,6 @@ module.exports = {
     'class-methods-use-this': 0,
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
+    '@typescript-eslint/ban-ts-comment': 0,
   },
 };
