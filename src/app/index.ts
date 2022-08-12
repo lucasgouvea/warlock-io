@@ -49,6 +49,10 @@ class App {
   public draw(): void {
     this.drawGrid();
     this.drawMapElements();
+    for (const { position: { x, y } } of this.player.getProjectiles()) {
+      this.p5.circle(x, y, 10);
+    }
+    this.player.updateProjectiles();
   }
 
   private drawGrid(): void {
@@ -77,6 +81,10 @@ class App {
   public keyPressed(): void {
     this.inputHandler.keyPressed();
   }
+
+  public getPlayer(): Player {
+    return this.player;
+  }
 }
 
 const sketch = (p5: P5) => {
@@ -91,6 +99,10 @@ const sketch = (p5: P5) => {
 
   p5.keyPressed = () => {
     app.keyPressed();
+  };
+
+  p5.mouseClicked = () => {
+    app.getPlayer().shoot();
   };
 };
 

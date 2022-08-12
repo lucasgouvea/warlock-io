@@ -2,16 +2,26 @@ import RightTriangle from '../drawings/right-triangle';
 import Position from '../position';
 import Element from './element';
 
+type Proj = { position: Position; angleRadians: number; unitVector: {x: number; y: number} };
+type UnitVector = {x: number; y: number}
+
 class Player extends Element {
   private mousePosition: Position;
 
   private rightTriangle: RightTriangle;
 
-  private rightTriangle2: RightTriangle | null;
+  private rightTriangle2: RightTriangle;
 
   private p5: p5;
 
+  private stickPosition: {
+    position: Position;
+    unitVector: UnitVector;
+  };
+
   readonly CIRCLE_RADIUS: number = 5;
+
+  private projectiles: Proj[];
 
   constructor(position: Position, p5: p5) {
     super(position);
@@ -22,7 +32,16 @@ class Player extends Element {
       this.mousePosition,
       this.p5,
     );
-    this.rightTriangle2 = null;
+    this.rightTriangle2 = new RightTriangle(
+      position,
+      this.mousePosition,
+      this.p5,
+    );
+    this.stickPosition = {
+      position: new Position(0, 0),
+      unitVector: { x: 1, y: 1 },
+    };
+    this.projectiles = [];
   }
 
   public getMousePosition(): Position {
@@ -64,14 +83,13 @@ class Player extends Element {
       this.mousePosition,
       this.p5,
     );
+    this.rightTriangle2.draw();
 
     const {
       originalPosition: op,
       targetPosition: tp,
       angleRadians: angleRadians2,
     } = this.rightTriangle2;
-
-    this.rightTriangle2.draw();
 
     // stick length
     const hypotenuse2 = 25;
@@ -89,6 +107,22 @@ class Player extends Element {
     const stickY = isTPyGreaterThanOPy
       ? op.y + oppositeSide2
       : op.y - oppositeSide2;
+
+    let unitVector:UnitVector = { x: 1, y: 1 };
+
+    if (isTPxGreaterThanOPx && !isTPyGreaterThanOPy) {
+      unitVector = { x: 1, y: -1 };
+    }
+
+    if (!isTPxGreaterThanOPx && isTPyGreaterThanOPy) {
+      unitVector = { x: -1, y: 1 };
+    }
+
+    if (!isTPxGreaterThanOPx && !isTPyGreaterThanOPy) {
+      unitVector = { x: -1, y: -1 };
+    }
+
+    this.stickPosition = { position: new Position(stickX, stickY), unitVector };
 
     this.p5.line(op.x, op.y, stickX, stickY);
   }
@@ -109,6 +143,39 @@ class Player extends Element {
       this.mousePosition,
       this.p5,
     );
+  }
+
+  public shoot(): void {
+    const { angleRadians } = this.rightTriangle2;
+    const { position: { x, y }, unitVector } = this.stickPosition;
+
+    this.projectiles.push({
+      position: new Position(x, y),
+      angleRadians,
+      unitVector,
+    });
+  }
+
+  public getProjectiles(): Proj[] {
+    return this.projectiles;
+  }
+
+  public updateProjectiles(): void {
+    this.projectiles = this.projectiles.map((p) => {
+      const { x, y } = p.position;
+      const { angleRadians, unitVector } = p;
+      const newX = x + unitVector.x * Math.cos(angleRadians) * 2;
+      const newY = y + unitVector.y * Math.sin(angleRadians) * 2;
+
+      return {
+        position: {
+          x: newX,
+          y: newY,
+        },
+        angleRadians,
+        unitVector,
+      };
+    });
   }
 }
 
