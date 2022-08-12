@@ -1,5 +1,5 @@
 import Position from './position';
-import { Player, Element } from './elements';
+import { Element } from './elements';
 
 class PositionsMap {
   map: Map<string, Element | null>;

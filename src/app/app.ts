@@ -3,9 +3,12 @@ import Position from './position';
 import PositionsMap from './positions-map';
 import Config from './config';
 import InputHandler from './input-handler';
+import Enemy from './elements/enemy';
 
 class App {
   private player: Player;
+
+  private enemy: Enemy;
 
   private positionsMap: PositionsMap;
 
@@ -15,6 +18,7 @@ class App {
 
   constructor(p5: p5) {
     this.player = new Player(Config.INITIAL_POS, p5);
+    this.enemy = new Enemy(Config.INITIAL_POS, p5);
     this.positionsMap = new PositionsMap(
       Config.CANVAS_WIDTH,
       Config.CANVAS_HEIGHT,
@@ -67,6 +71,7 @@ class App {
       if (value !== null) {
         this.player.draw();
         this.player.drawArm();
+        this.enemy.draw();
       }
     }
   }

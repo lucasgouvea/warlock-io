@@ -1,9 +1,8 @@
 import RightTriangle from '../drawings/right-triangle';
 import Position from '../position';
+import { Ball } from '../projectiles';
+import { UnitVector } from '../utils';
 import Element from './element';
-
-type Proj = { position: Position; angleRadians: number; unitVector: {x: number; y: number} };
-type UnitVector = {x: number; y: number}
 
 class Player extends Element {
   private mousePosition: Position;
@@ -19,9 +18,9 @@ class Player extends Element {
     unitVector: UnitVector;
   };
 
-  readonly CIRCLE_RADIUS: number = 5;
+  readonly CIRCLE_RADIUS = 8;
 
-  private projectiles: Proj[];
+  private ballProjectiles: Ball[];
 
   constructor(position: Position, p5: p5) {
     super(position);
@@ -41,7 +40,7 @@ class Player extends Element {
       position: new Position(0, 0),
       unitVector: { x: 1, y: 1 },
     };
-    this.projectiles = [];
+    this.ballProjectiles = [];
   }
 
   public getMousePosition(): Position {
@@ -53,7 +52,7 @@ class Player extends Element {
     this.p5.strokeWeight(1);
     const { x, y } = this.position;
     const { x: xMouse, y: yMouse } = this.mousePosition;
-    this.p5.circle(x, y, 20);
+    this.p5.circle(x, y, 42);
     this.p5.circle(xMouse, yMouse, this.CIRCLE_RADIUS * 2);
     this.rightTriangle.draw();
   }
@@ -92,7 +91,7 @@ class Player extends Element {
     } = this.rightTriangle2;
 
     // stick length
-    const hypotenuse2 = 25;
+    const hypotenuse2 = 45;
 
     // similarity of triangles again
     const adjacentSide2 = Math.cos(angleRadians2) * hypotenuse2;
@@ -108,7 +107,7 @@ class Player extends Element {
       ? op.y + oppositeSide2
       : op.y - oppositeSide2;
 
-    let unitVector:UnitVector = { x: 1, y: 1 };
+    let unitVector: UnitVector = { x: 1, y: 1 };
 
     if (isTPxGreaterThanOPx && !isTPyGreaterThanOPy) {
       unitVector = { x: 1, y: -1 };
@@ -147,35 +146,29 @@ class Player extends Element {
 
   public shoot(): void {
     const { angleRadians } = this.rightTriangle2;
-    const { position: { x, y }, unitVector } = this.stickPosition;
+    const { position, unitVector } = this.stickPosition;
 
-    this.projectiles.push({
-      position: new Position(x, y),
-      angleRadians,
-      unitVector,
-    });
+    const projectile = new Ball(position, angleRadians, unitVector, this.p5);
+
+    this.ballProjectiles.push(projectile);
   }
 
-  public getProjectiles(): Proj[] {
-    return this.projectiles;
+  public getProjectiles(): Ball[] {
+    return this.ballProjectiles;
   }
 
   public updateProjectiles(): void {
-    this.projectiles = this.projectiles.map((p) => {
-      const { x, y } = p.position;
-      const { angleRadians, unitVector } = p;
-      const newX = x + unitVector.x * Math.cos(angleRadians) * 2;
-      const newY = y + unitVector.y * Math.sin(angleRadians) * 2;
+    this.ballProjectiles = this.ballProjectiles.map(
+      ({ position, angleRadians, unitVector }) => {
+        const { x, y } = position;
+        const newX = x + unitVector.x * Math.cos(angleRadians) * 2;
+        const newY = y + unitVector.y * Math.sin(angleRadians) * 2;
 
-      return {
-        position: {
-          x: newX,
-          y: newY,
-        },
-        angleRadians,
-        unitVector,
-      };
-    });
+        const ball = new Ball(new Position(newX, newY), angleRadians, unitVector, this.p5);
+
+        return ball;
+      },
+    );
   }
 }
 
