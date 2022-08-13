@@ -1,8 +1,8 @@
 import express from 'express';
 import { resolve } from 'path';
-import AppServer from './app-server';
+import AppServer from './servers/app-server';
 
-import WsServer from './ws-server';
+import WsServer from './servers/ws-server';
 
 const app = express();
 const ws = new WsServer();

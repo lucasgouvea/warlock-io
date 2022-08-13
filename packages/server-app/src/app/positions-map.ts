@@ -1,4 +1,4 @@
-import Config from './config';
+import Config from '../config';
 import Cell from './map/cell';
 import Position from './position';
 import { Element } from './elements';
@@ -6,11 +6,10 @@ import { Element } from './elements';
 class PositionsMap {
   private map: Map<string, Cell>;
 
-
-  constructor(width: number, height: number, gridSize: number) {
+  constructor() {
     this.map = new Map();
-    for (let x = 0; x < width; x += gridSize) {
-      for (let y = 0; y < height; y += gridSize) {
+    for (let x = 0; x < Config.CANVAS_WIDTH; x += Config.GRID_SIZE) {
+      for (let y = 0; y < Config.CANVAS_HEIGHT; y += Config.GRID_SIZE) {
         const centerX = x + Config.GRID_SIZE / 2;
         const centerY = y + Config.GRID_SIZE / 2;
         this.init(new Position(centerX, centerY));

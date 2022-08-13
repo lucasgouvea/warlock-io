@@ -1,5 +1,4 @@
-
-import Config from './config';
+import Config from '../config';
 import { Player } from './elements';
 import KeyInput from './key-input';
 import Position from './position';
