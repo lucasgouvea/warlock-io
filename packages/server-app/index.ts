@@ -1,5 +1,6 @@
 import express from 'express';
 import { resolve } from 'path';
+import AppServer from './app-server';
 
 import WsServer from './ws-server';
 
@@ -14,3 +15,5 @@ app.get('/app', (req, res) => {
 app.listen(3000, () => {
   console.log('up');
 });
+
+const appServer = new AppServer();

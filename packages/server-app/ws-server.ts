@@ -29,9 +29,9 @@ class WsServer {
     });
 
     wss.on('connection', (ws, message) => {
-      const id = ws.url.split('/player?id=')[1];
+      /* const id = ws.url.split('/player?id=')[1]; */
       ws.on('message', (data) => {
-        console.log(`received: %s from ${id}`, data);
+        console.log('received: %s', data);
       });
 
       ws.send('something');
