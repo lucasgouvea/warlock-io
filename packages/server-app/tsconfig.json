@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "composite": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": "./dist",
@@ -12,5 +12,4 @@
     "target": "es2015",
     "allowSyntheticDefaultImports": true
   },
-  "types": ["p5/global"],
 }

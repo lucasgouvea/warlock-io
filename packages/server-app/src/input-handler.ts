@@ -1,4 +1,3 @@
-import P5 from 'p5';
 
 import Config from './config';
 import { Player } from './elements';
@@ -8,17 +7,15 @@ import PositionsMap from './map/positions-map';
 
 class InputHandler {
   constructor(
-    private p5: P5,
     private player: Player,
     private positionsMap: PositionsMap,
   ) {
-    this.p5 = p5;
     this.player = player;
     this.positionsMap = positionsMap;
   }
 
-  public keyPressed(): void {
-    this.movePlayer(this.p5.keyCode as KeyInput);
+  public keyPressed(keyCode: KeyInput): void {
+    this.movePlayer(keyCode);
   }
 
   private movePlayer(input: KeyInput) {

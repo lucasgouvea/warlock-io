@@ -6,8 +6,6 @@ abstract class Element {
 
   abstract type: ElementTypeEnum
 
-  abstract draw(): void;
-
   constructor(position?: Position) {
     this.position = position || new Position(0, 0);
   }

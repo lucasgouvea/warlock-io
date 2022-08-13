@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx webpack --mode production",
     "dev": "nodemon --exec npm start -e js,json,ts",
-    "server": "node --loader ts-node/esm ./packages/server-app/index.ts",
+    "server": "node --loader ts-node/esm ./packages/server-app/src/index.ts",
     "start": "npm run build && npm run server"
   },
   "author": "",

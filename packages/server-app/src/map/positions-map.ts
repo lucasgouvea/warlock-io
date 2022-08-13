@@ -1,4 +1,3 @@
-import P5 from 'p5';
 
 import Position from '../position';
 import { Element } from '../elements';
@@ -8,11 +7,9 @@ import Config from '../config';
 class PositionsMap {
   private map: Map<string, Cell>;
 
-  private p5: P5;
 
-  constructor(width: number, height: number, gridSize: number, p5: P5) {
+  constructor(width: number, height: number, gridSize: number) {
     this.map = new Map();
-    this.p5 = p5;
     for (let x = 0; x < width; x += gridSize) {
       for (let y = 0; y < height; y += gridSize) {
         const centerX = x + Config.GRID_SIZE / 2;
@@ -23,7 +20,7 @@ class PositionsMap {
   }
 
   public init(position: Position): void {
-    this.map.set(`${position.x},${position.y}`, new Cell(null, position, this.p5));
+    this.map.set(`${position.x},${position.y}`, new Cell(null, position));
   }
 
   public clear({ x, y }: Position): void {

@@ -1,31 +1,19 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-new */
-import P5 from 'p5';
+import express from 'express';
+import { resolve } from 'path';
+import AppServer from './app-server';
 
-import App from './app';
+import WsServer from './ws-server';
 
-const socket = new WebSocket('ws://localhost:8888/player?id=60');
-socket.onmessage = (event) => {
-  console.log(event.data);
-};
+const app = express();
+const ws = new WsServer();
+app.use('/public', express.static('public'));
 
-const sketch = (p5: P5) => {
-  const app = new App(p5);
+app.get('/app', (req, res) => {
+  res.sendFile(resolve('public/index.html'));
+});
 
-  p5.setup = () => {
-    app.setup(p5);
-  };
-  p5.draw = () => {
-    app.draw();
-  };
+app.listen(3000, () => {
+  console.log('up');
+});
 
-  p5.keyPressed = () => {
-    app.keyPressed();
-  };
-
-  p5.mouseClicked = () => {
-    app.getPlayer().shoot();
-  };
-};
-
-new P5(sketch);
+const appServer = new AppServer();

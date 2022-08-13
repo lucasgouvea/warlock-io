@@ -11,12 +11,15 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "rootDir": "./src",
-        "outDir": "./superbin",
+        "outDir": "./dist",
         "allowUnreachableCode": true
     },
     "references": [
         {
-            "path": "./packages/client-app"
+            "path": "./packages/client-app",
+        },
+        {
+            "path": "./packages/server-app",
         }
     ],
     "files": [
