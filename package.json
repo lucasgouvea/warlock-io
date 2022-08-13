@@ -7,8 +7,7 @@
     "build": "npx webpack --mode production",
     "dev": "nodemon --exec npm start -e js,json,ts",
     "server": "node --loader ts-node/esm ./packages/server-app/index.ts",
-    "start": "npx webpack --mode production && ts-node ./src/server-app/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build && npm run server"
   },
   "author": "",
   "license": "ISC",

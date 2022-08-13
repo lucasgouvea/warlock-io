@@ -1,4 +1,8 @@
 {
   "verbose": true,
-  "ignore": ["*.spec.js"]
+  "ignore": ["*.spec.js"],
+  "watch": [
+    "packages/client-app/**/*",
+    "packages/server-app/**/*"
+  ]
 }
