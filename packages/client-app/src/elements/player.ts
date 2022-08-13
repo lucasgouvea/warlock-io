@@ -1,3 +1,5 @@
+import P5 from 'p5';
+
 import RightTriangle from '../drawings/right-triangle';
 import Position from '../position';
 import { Ball } from '../projectiles';
@@ -14,7 +16,7 @@ class Player extends Element {
 
   private rightTriangle2: RightTriangle;
 
-  private p5: p5;
+  private p5: P5;
 
   private stickPosition: {
     position: Position;
@@ -25,7 +27,7 @@ class Player extends Element {
 
   private ballProjectiles: Ball[];
 
-  constructor(position: Position, p5: p5) {
+  constructor(position: Position, p5: P5) {
     super(position);
     this.mousePosition = new Position(0, 0);
     this.p5 = p5;

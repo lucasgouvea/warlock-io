@@ -1,5 +1,7 @@
+import P5 from 'p5';
+
 import Config from '../config';
-import { Element, Enemy, Player } from '../elements';
+import { Element } from '../elements';
 import ElementTypeEnum from '../elements/element-type-enum';
 import Position from '../position';
 import { Projectile } from '../projectiles';
@@ -15,11 +17,11 @@ class Cell {
 
   public y2: number;
 
-  private p5: p5;
+  private p5: P5;
 
   private element: Element | null;
 
-  constructor(element: Element | null, centerPosition: Position, p5: p5) {
+  constructor(element: Element | null, centerPosition: Position, p5: P5) {
     this.centerPosition = centerPosition;
     this.x1 = centerPosition.x - Config.GRID_SIZE / 2;
     this.x2 = centerPosition.x + Config.GRID_SIZE / 2;

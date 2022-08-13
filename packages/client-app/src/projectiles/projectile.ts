@@ -1,3 +1,5 @@
+import P5 from 'p5';
+
 import Position from '../position';
 import { UnitVector } from '../utils';
 
@@ -6,7 +8,7 @@ abstract class Projectile {
 
   public position: Position;
 
-  protected p5: p5;
+  protected p5: P5;
 
   public unitVector: UnitVector;
 
@@ -16,7 +18,7 @@ abstract class Projectile {
     position: Position,
     angleRadians: number,
     unitVector: UnitVector,
-    p5: p5,
+    p5: P5,
   ) {
     this.position = position || new Position(0, 0);
     this.angleRadians = angleRadians;

@@ -23,7 +23,7 @@ class RightTriangle {
 
   static NINETY_DEGREES_IN_RADIANS = Math.PI / 2;
 
-  constructor(originalPosition: Position, targetPosition: Position, p5: p5) {
+  constructor(originalPosition: Position, targetPosition: Position, p5: P5) {
     this.originalPosition = originalPosition;
     this.targetPosition = targetPosition;
     this.adjacentSide = Math.abs(targetPosition.x - originalPosition.x);

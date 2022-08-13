@@ -1,3 +1,5 @@
+import P5 from 'p5';
+
 import Position from '../position';
 import { Element } from '../elements';
 import Cell from './cell';
@@ -6,9 +8,9 @@ import Config from '../config';
 class PositionsMap {
   private map: Map<string, Cell>;
 
-  private p5: p5;
+  private p5: P5;
 
-  constructor(width: number, height: number, gridSize: number, p5: p5) {
+  constructor(width: number, height: number, gridSize: number, p5: P5) {
     this.map = new Map();
     this.p5 = p5;
     for (let x = 0; x < width; x += gridSize) {

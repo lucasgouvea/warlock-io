@@ -1,3 +1,5 @@
+import P5 from 'p5';
+
 import Config from './config';
 import { Player } from './elements';
 import KeyInput from './key-input';
@@ -6,7 +8,7 @@ import PositionsMap from './map/positions-map';
 
 class InputHandler {
   constructor(
-    private p5: p5,
+    private p5: P5,
     private player: Player,
     private positionsMap: PositionsMap,
   ) {

@@ -1,8 +1,10 @@
 import express from 'express';
 import { resolve } from 'path';
 
-const app = express();
+import WsServer from './ws-server';
 
+const app = express();
+const ws = new WsServer();
 app.use('/public', express.static('public'));
 
 app.get('/app', (req, res) => {

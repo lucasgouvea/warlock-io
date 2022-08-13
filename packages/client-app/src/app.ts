@@ -1,3 +1,5 @@
+import P5 from 'p5';
+
 import Player from './elements/player';
 import Position from './position';
 import PositionsMap from './map/positions-map';
@@ -12,11 +14,11 @@ class App {
 
   private positionsMap: PositionsMap;
 
-  private p5: p5;
+  private p5: P5;
 
   private inputHandler: InputHandler;
 
-  constructor(p5: p5) {
+  constructor(p5: P5) {
     this.player = new Player(Config.INITIAL_POS_PLAYER, p5);
     this.enemy = new Enemy(Config.INITIAL_POS_ENEMY, p5);
     this.positionsMap = new PositionsMap(
@@ -29,7 +31,7 @@ class App {
     this.inputHandler = new InputHandler(p5, this.player, this.positionsMap);
   }
 
-  public setup(p: p5): void {
+  public setup(p: P5): void {
     const canvas = p.createCanvas(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT);
     canvas.parent('sketch-holder');
     this.positionsMap.set(this.player);

@@ -1,14 +1,25 @@
 {
-  "extends": "@tsconfig/node16/tsconfig.json",
-  "compilerOptions": {
-    "noImplicitAny": true,
-    "preserveConstEnums": true,
-    "removeComments": true,
-    "rootDir": "src/client-app",
-    "sourceMap": true,
-    "target": "es2015",
-    "moduleResolution": "node",
-    "module": "ESNext"
-  },
-  "types": ["p5/global"],
+    "compilerOptions": {
+        "incremental": true,
+        "target": "es2019",
+        "module": "commonjs",
+        "declaration": true,
+        "sourceMap": true,
+        "strict": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "rootDir": "./src",
+        "outDir": "./superbin",
+        "allowUnreachableCode": true
+    },
+    "references": [
+        {
+            "path": "./packages/client-app"
+        }
+    ],
+    "files": [
+        "./src/index.ts"
+    ]
 }

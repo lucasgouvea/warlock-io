@@ -1,3 +1,5 @@
+import P5 from 'p5';
+
 import Position from '../position';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';
@@ -5,11 +7,11 @@ import ElementTypeEnum from './element-type-enum';
 class Enemy extends Element {
   readonly type = ElementTypeEnum.ENEMY;
 
-  private p5: p5;
+  private p5: P5;
 
   private hp: number;
 
-  constructor(position: Position, p5: p5) {
+  constructor(position: Position, p5: P5) {
     super(position);
     this.p5 = p5;
     this.hp = 10;
