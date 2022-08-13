@@ -1,5 +1,6 @@
 import Config from '../config';
-import { Element, Player } from '../elements';
+import { Element, Enemy, Player } from '../elements';
+import ElementTypeEnum from '../elements/element-type-enum';
 import Position from '../position';
 import { Projectile } from '../projectiles';
 
@@ -39,6 +40,9 @@ class Cell {
     for (const projectil of projectiles) {
       if (this.isInside(projectil)) {
         this.p5.fill(122, 204, 15);
+        if (this.element?.type === ElementTypeEnum.ENEMY) {
+          console.log(1111);
+        }
       }
     }
     this.p5.stroke(122);

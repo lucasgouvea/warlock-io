@@ -3,8 +3,11 @@ import Position from '../position';
 import { Ball } from '../projectiles';
 import { UnitVector } from '../utils';
 import Element from './element';
+import ElementTypeEnum from './element-type-enum';
 
 class Player extends Element {
+  readonly type = ElementTypeEnum.PLAYER;
+
   private mousePosition: Position;
 
   private rightTriangle: RightTriangle;
@@ -164,7 +167,12 @@ class Player extends Element {
         const newX = x + unitVector.x * Math.cos(angleRadians) * 2;
         const newY = y + unitVector.y * Math.sin(angleRadians) * 2;
 
-        const ball = new Ball(new Position(newX, newY), angleRadians, unitVector, this.p5);
+        const ball = new Ball(
+          new Position(newX, newY),
+          angleRadians,
+          unitVector,
+          this.p5,
+        );
 
         return ball;
       },

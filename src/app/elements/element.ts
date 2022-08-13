@@ -1,10 +1,12 @@
-import P5 from 'p5';
 import Position from '../position';
+import ElementTypeEnum from './element-type-enum';
 
 abstract class Element {
   protected position: Position;
 
-  abstract draw(p: P5): void;
+  abstract type: ElementTypeEnum
+
+  abstract draw(): void;
 
   constructor(position?: Position) {
     this.position = position || new Position(0, 0);

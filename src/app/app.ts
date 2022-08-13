@@ -17,8 +17,8 @@ class App {
   private inputHandler: InputHandler;
 
   constructor(p5: p5) {
-    this.player = new Player(Config.INITIAL_POS, p5);
-    this.enemy = new Enemy(Config.INITIAL_POS, p5);
+    this.player = new Player(Config.INITIAL_POS_PLAYER, p5);
+    this.enemy = new Enemy(Config.INITIAL_POS_ENEMY, p5);
     this.positionsMap = new PositionsMap(
       Config.CANVAS_WIDTH,
       Config.CANVAS_HEIGHT,
@@ -33,6 +33,7 @@ class App {
     const canvas = p.createCanvas(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT);
     canvas.parent('sketch-holder');
     this.positionsMap.set(this.player);
+    this.positionsMap.set(this.enemy);
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
