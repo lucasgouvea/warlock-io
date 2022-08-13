@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "removeComments": true,
-    "rootDir": "./src/app",
+    "rootDir": "src/client-app",
     "sourceMap": true,
     "target": "es2015",
     "moduleResolution": "node",
