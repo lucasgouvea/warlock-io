@@ -1,6 +1,6 @@
 import Player from './elements/player';
 import Position from './position';
-import PositionsMap from './positions-map';
+import PositionsMap from './map/positions-map';
 import Config from './config';
 import InputHandler from './input-handler';
 import Enemy from './elements/enemy';
@@ -23,6 +23,7 @@ class App {
       Config.CANVAS_WIDTH,
       Config.CANVAS_HEIGHT,
       Config.GRID_SIZE,
+      p5,
     );
     this.p5 = p5;
     this.inputHandler = new InputHandler(p5, this.player, this.positionsMap);
@@ -67,12 +68,14 @@ class App {
   }
 
   private drawMapElements(): void {
-    for (const [key, value] of this.positionsMap.map) {
-      if (value !== null) {
+    const projectiles = this.player.getProjectiles();
+    for (const [key, cell] of this.positionsMap.getMap()) {
+      if (cell !== null) {
         this.player.draw();
         this.player.drawArm();
         this.enemy.draw();
       }
+      cell.draw(projectiles);
     }
   }
 
