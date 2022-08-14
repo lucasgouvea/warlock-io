@@ -7,7 +7,7 @@ class AppContext {
 
   constructor() {
     this.positionsMap = new PositionsMap();
-    this.positionsMap.set(new Player(new Position(20, 20)));
+    this.positionsMap.set(new Player(new Position(100, 100)));
   }
 
   public serialize(): string {

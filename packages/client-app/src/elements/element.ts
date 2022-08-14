@@ -4,7 +4,7 @@ import ElementTypeEnum from './element-type-enum';
 abstract class Element {
   protected position: Position;
 
-  abstract type: ElementTypeEnum
+  abstract type: ElementTypeEnum;
 
   abstract draw(): void;
 
@@ -14,6 +14,10 @@ abstract class Element {
 
   public getPosition(): Position {
     return this.position;
+  }
+
+  public setPosition(position: Position): void {
+    this.position = position;
   }
 }
 

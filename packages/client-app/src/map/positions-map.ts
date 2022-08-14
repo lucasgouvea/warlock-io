@@ -1,7 +1,7 @@
 import P5 from 'p5';
 
 import Position from '../position';
-import { Element } from '../elements';
+import { Player } from '../elements';
 import Cell from './cell';
 import Config from '../config';
 
@@ -29,11 +29,11 @@ class PositionsMap {
     );
   }
 
-  public parseMap(event: MessageEvent<string>): void {
+  public parseMap(event: MessageEvent<string>, player: Player): void {
     const object = JSON.parse(event.data) as object;
     for (const [key, _cell] of Object.entries(object)) {
       const cell = this.map.get(key);
-      cell.set(_cell);
+      cell.set(_cell, player);
     }
   }
 

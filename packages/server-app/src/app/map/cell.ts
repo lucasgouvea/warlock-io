@@ -22,7 +22,7 @@ class Cell {
   constructor(element: Element | null, centerPosition: Position) {
     this.centerPosition = centerPosition;
     this.element = element;
-    this.rgb = new RGB(0, 0, 0);
+    this.rgb = new RGB(255, 255, 255);
     this.x1 = centerPosition.x - Config.GRID_SIZE / 2;
     this.x2 = centerPosition.x + Config.GRID_SIZE / 2;
     this.y1 = centerPosition.y - Config.GRID_SIZE / 2;
@@ -45,9 +45,9 @@ class Cell {
 
   public setElement(element: Element | null): void {
     if (element !== null) {
-      this.rgb = new RGB(125, 222, 45);
+      this.rgb = new RGB(176, 190, 247);
     } else {
-      this.rgb = new RGB(0, 0, 0);
+      this.rgb = new RGB(255, 255, 255);
     }
     this.element = element;
   }

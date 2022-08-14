@@ -7,7 +7,7 @@ class Config {
 
   static GRID_SIZE = 40;
 
-  static INITIAL_POS_PLAYER = new Position(60, 60);
+  static INITIAL_POS_PLAYER = new Position(20, 60);
 
   static INITIAL_POS_ENEMY = new Position(100, 100);
 
