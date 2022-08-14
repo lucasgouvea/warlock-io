@@ -1,11 +1,12 @@
 import express from 'express';
 import { resolve } from 'path';
-import AppServer from './servers/app-server';
+import AppContext from './app-context';
 
-import WsServer from './servers/ws-server';
+import WsServer from './ws-server';
 
 const app = express();
-const ws = new WsServer();
+const context = new AppContext();
+const ws = new WsServer(context);
 app.use('/public', express.static('public'));
 
 app.get('/app', (req, res) => {
@@ -15,5 +16,3 @@ app.get('/app', (req, res) => {
 app.listen(3000, () => {
   console.log('up');
 });
-
-const appServer = new AppServer();

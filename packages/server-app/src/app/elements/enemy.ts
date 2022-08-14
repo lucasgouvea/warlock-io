@@ -1,4 +1,4 @@
-import Position from '../../position';
+import Position from '../position';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';
 

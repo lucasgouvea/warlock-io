@@ -60,9 +60,10 @@ class Player extends Element {
     this.p5.circle(x, y, 42);
     this.p5.circle(xMouse, yMouse, this.CIRCLE_RADIUS * 2);
     this.rightTriangle.draw();
+    this.drawArm();
   }
 
-  public drawArm(): void {
+  private drawArm(): void {
     this.p5.stroke(0);
     this.p5.strokeWeight(5);
     const {

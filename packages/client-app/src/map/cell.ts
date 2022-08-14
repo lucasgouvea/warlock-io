@@ -32,45 +32,31 @@ class Cell {
     this.element = element;
   }
 
-  public draw(projectiles: Projectile[]) {
+  public draw() {
     if (this.element === null) {
       this.p5.fill(255, 255, 255);
     } else {
       this.p5.fill(122, 204, 15);
     }
 
-    for (const projectil of projectiles) {
-      if (this.isInside(projectil)) {
-        this.p5.fill(122, 204, 15);
-        if (this.element?.type === ElementTypeEnum.ENEMY) {
-          console.log(1111);
-        }
-      }
-    }
     this.p5.stroke(122);
     this.p5.square(this.x1, this.y1, Config.GRID_SIZE);
   }
 
-  public isInside(projectil: Projectile) {
-    const { x, y } = projectil.getPosition();
-
-    if (
-      this.x2 - x > 0
-      && this.y2 - y > 0
-      && this.x1 - x < 0
-      && this.y1 - y < 0
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  public setElement(element: Element | null): void {
+  public set({
+    centerPosition,
+    element,
+    x1,
+    x2,
+    y1,
+    y2,
+  }: Cell): void {
+    this.centerPosition = centerPosition;
     this.element = element;
-  }
-
-  public getElement(): Element | null {
-    return this.element;
+    this.x1 = x1;
+    this.x2 = x2;
+    this.y1 = y1;
+    this.y2 = y2;
   }
 }
 

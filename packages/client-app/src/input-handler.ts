@@ -3,18 +3,17 @@ import P5 from 'p5';
 import Config from './config';
 import { Player } from './elements';
 import KeyInput from './key-input';
-import Position from './position';
-import PositionsMap from './map/positions-map';
+import ClientWeboscket from './client-websocket';
 
 class InputHandler {
   constructor(
     private p5: P5,
     private player: Player,
-    private positionsMap: PositionsMap,
+    private clientWeboscket: ClientWeboscket,
   ) {
     this.p5 = p5;
     this.player = player;
-    this.positionsMap = positionsMap;
+    this.clientWeboscket = clientWeboscket;
   }
 
   public keyPressed(): void {
@@ -43,9 +42,9 @@ class InputHandler {
         break;
     }
 
-    this.player.setPosition(new Position(newX, newY));
-    this.positionsMap.clear(new Position(x, y));
-    this.positionsMap.set(this.player);
+    // TODO: send to server this.player.setPosition(new Position(newX, newY));
+    // TODO: send to server - this.positionsMap.clear(new Position(x, y));
+    // TODO: send to server -this.positionsMap.set(this.player);
   }
 }
 

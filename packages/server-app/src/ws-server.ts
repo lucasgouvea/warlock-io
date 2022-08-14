@@ -1,4 +1,5 @@
 import { WebSocketServer } from 'ws';
+import AppContext from './app-context';
 
 class WsServer {
   private readonly perMessageDeflate = {
@@ -21,7 +22,7 @@ class WsServer {
     // should not be compressed if context takeover is disabled.
   };
 
-  constructor() {
+  constructor(context: AppContext) {
     const wss = new WebSocketServer({
       port: 8888,
       path: '/player',
@@ -34,7 +35,9 @@ class WsServer {
         console.log('received: %s', data);
       });
 
-      ws.send('something');
+      setInterval(() => {
+        ws.send(context.serialize());
+      }, 20);
     });
   }
 }

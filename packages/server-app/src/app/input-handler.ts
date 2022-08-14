@@ -2,7 +2,7 @@ import Config from '../config';
 import { Player } from './elements';
 import KeyInput from './key-input';
 import Position from './position';
-import PositionsMap from './map/positions-map';
+import PositionsMap from './positions-map';
 
 class InputHandler {
   constructor(

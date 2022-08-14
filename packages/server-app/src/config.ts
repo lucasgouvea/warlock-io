@@ -1,4 +1,4 @@
-import Position from './position';
+import Position from './app/position';
 
 class Config {
   static CANVAS_WIDTH = 400;

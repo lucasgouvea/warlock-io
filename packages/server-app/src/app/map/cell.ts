@@ -1,10 +1,15 @@
-import Config from '../config';
+import Config from '../../config';
 import { Element } from '../elements';
 import Position from '../position';
 import { Projectile } from '../projectiles';
+import RGB from '../utils/rgb';
 
 class Cell {
-  public centerPosition: Position;
+  private centerPosition: Position;
+
+  private element: Element | null;
+
+  private rgb: RGB;
 
   public x1: number;
 
@@ -14,19 +19,15 @@ class Cell {
 
   public y2: number;
 
-
-  private element: Element | null;
-
   constructor(element: Element | null, centerPosition: Position) {
     this.centerPosition = centerPosition;
+    this.element = element;
+    this.rgb = new RGB(0, 0, 0);
     this.x1 = centerPosition.x - Config.GRID_SIZE / 2;
     this.x2 = centerPosition.x + Config.GRID_SIZE / 2;
     this.y1 = centerPosition.y - Config.GRID_SIZE / 2;
     this.y2 = centerPosition.y + Config.GRID_SIZE / 2;
-
-    this.element = element;
   }
-
 
   public isInside(projectil: Projectile) {
     const { x, y } = projectil.getPosition();
@@ -43,6 +44,11 @@ class Cell {
   }
 
   public setElement(element: Element | null): void {
+    if (element !== null) {
+      this.rgb = new RGB(125, 222, 45);
+    } else {
+      this.rgb = new RGB(0, 0, 0);
+    }
     this.element = element;
   }
 

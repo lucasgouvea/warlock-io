@@ -1,4 +1,4 @@
-import Position from '../../position';
+import Position from '../position';
 import ElementTypeEnum from './element-type-enum';
 
 abstract class Element {

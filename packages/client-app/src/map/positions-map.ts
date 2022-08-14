@@ -10,11 +10,11 @@ class PositionsMap {
 
   private p5: P5;
 
-  constructor(width: number, height: number, gridSize: number, p5: P5) {
+  constructor(p5: P5) {
     this.map = new Map();
     this.p5 = p5;
-    for (let x = 0; x < width; x += gridSize) {
-      for (let y = 0; y < height; y += gridSize) {
+    for (let x = 0; x < Config.CANVAS_WIDTH; x += Config.GRID_SIZE) {
+      for (let y = 0; y < Config.CANVAS_HEIGHT; y += Config.GRID_SIZE) {
         const centerX = x + Config.GRID_SIZE / 2;
         const centerY = y + Config.GRID_SIZE / 2;
         this.init(new Position(centerX, centerY));
@@ -23,30 +23,18 @@ class PositionsMap {
   }
 
   public init(position: Position): void {
-    this.map.set(`${position.x},${position.y}`, new Cell(null, position, this.p5));
+    this.map.set(
+      `${position.x},${position.y}`,
+      new Cell(null, position, this.p5),
+    );
   }
 
-  public clear({ x, y }: Position): void {
-    const cell = this.map.get(`${x},${y}`);
-    if (cell) {
-      cell.setElement(null);
+  public parseMap(event: MessageEvent<string>): void {
+    const object = JSON.parse(event.data) as object;
+    for (const [key, _cell] of Object.entries(object)) {
+      const cell = this.map.get(key);
+      cell.set(_cell);
     }
-  }
-
-  public set(element: Element): void {
-    const { x, y } = element.getPosition();
-    const cell = this.map.get(`${x},${y}`);
-    if (cell) {
-      cell.setElement(element);
-    }
-  }
-
-  public get({ x, y }: Position): Element | null {
-    const cell = this.map.get(`${x},${y}`);
-    if (cell) {
-      return cell.getElement();
-    }
-    return null;
   }
 
   public getMap(): Map<string, Cell> {

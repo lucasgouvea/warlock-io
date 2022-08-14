@@ -1,5 +1,5 @@
 import { UnitVector, RightTriangle } from '../utils';
-import Position from '../../position';
+import Position from '../position';
 import { Ball } from '../projectiles';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';

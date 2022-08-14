@@ -3,14 +3,11 @@
 import P5 from 'p5';
 
 import App from './app';
-
-const socket = new WebSocket('ws://localhost:8888/player?id=60');
-socket.onmessage = (event) => {
-  console.log(event.data);
-};
+import ClientWebsocket from './client-websocket';
 
 const sketch = (p5: P5) => {
-  const app = new App(p5);
+  const clientWebsocket = new ClientWebsocket(p5);
+  const app = new App(p5, clientWebsocket);
 
   p5.setup = () => {
     app.setup(p5);
