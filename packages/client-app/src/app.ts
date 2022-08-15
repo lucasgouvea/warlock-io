@@ -3,7 +3,7 @@ import P5 from 'p5';
 import Player from './elements/player';
 import ClientPosition from './utils/client-position';
 import Config from './config';
-import InputHandler from './input-handler';
+import ClientInputHandler from './client-input-handler';
 import Enemy from './elements/enemy';
 import ClientWebsocket from './client-websocket';
 
@@ -14,7 +14,7 @@ class App {
 
   private p5: P5;
 
-  private inputHandler: InputHandler;
+  private inputHandler: ClientInputHandler;
 
   public clientWeboscket: ClientWebsocket;
 
@@ -25,7 +25,7 @@ class App {
     this.clientWeboscket.setPlayer(this.player);
 
     this.p5 = p5;
-    this.inputHandler = new InputHandler(p5, this.player, this.clientWeboscket);
+    this.inputHandler = new ClientInputHandler(p5, this.player, this.clientWeboscket);
   }
 
   public setup(p: P5): void {
@@ -63,6 +63,10 @@ class App {
 
   public getPlayer(): Player {
     return this.player;
+  }
+
+  public mouseClicked(): void {
+    this.inputHandler.mouseClicked();
   }
 }
 

@@ -1,11 +1,10 @@
 import P5 from 'p5';
 
-import Config from './config';
 import { Player } from './elements';
 import KeyInput from './key-input';
 import ClientWeboscket from './client-websocket';
 
-class InputHandler {
+class ClientInputHandler {
   constructor(
     private p5: P5,
     private player: Player,
@@ -20,13 +19,13 @@ class InputHandler {
     this.movePlayer(this.p5.keyCode as KeyInput);
   }
 
-  private movePlayer(input: KeyInput) {
-    this.clientWeboscket.send('move', input);
+  public mouseClicked(): void {
+    this.clientWeboscket.send('clicked');
+  }
 
-    // TODO: send to server this.player.setPosition(new ClientPosition(newX, newY));
-    // TODO: send to server - this.positionsMap.clear(new ClientPosition(x, y));
-    // TODO: send to server -this.positionsMap.set(this.player);
+  private movePlayer(input: KeyInput): void {
+    this.clientWeboscket.send('move', input);
   }
 }
 
-export default InputHandler;
+export default ClientInputHandler;

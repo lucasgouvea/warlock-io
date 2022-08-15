@@ -21,7 +21,7 @@ const sketch = (p5: P5) => {
   };
 
   p5.mouseClicked = () => {
-    app.getPlayer().shoot();
+    app.mouseClicked();
   };
 };
 

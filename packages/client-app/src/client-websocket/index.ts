@@ -27,8 +27,8 @@ class ClientWebsocket {
     this.player = player;
   }
 
-  public send(command: string, input: KeyInput) {
-    const data = JSON.stringify({ command, input });
+  public send(command: string, input?: KeyInput) {
+    const data = JSON.stringify({ command, input: input || null });
     this.socket.send(data);
   }
 }

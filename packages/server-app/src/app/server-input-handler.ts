@@ -4,17 +4,23 @@ import KeyInput from './key-input';
 import ServerPosition from './utils/server-position';
 import PositionsMap from './positions-map';
 
-class InputHandler {
-  constructor(
-    private player: Player,
-    private positionsMap: PositionsMap,
-  ) {
+class ServerInputHandler {
+  constructor(private player: Player, private positionsMap: PositionsMap) {
     this.player = player;
     this.positionsMap = positionsMap;
   }
 
-  public keyPressed(keyCode: KeyInput): void {
-    this.movePlayer(keyCode);
+  public handle(command: string, input: KeyInput) {
+    switch (command) {
+      case 'move':
+        this.movePlayer(input);
+        break;
+      case 'click':
+        this.click();
+        break;
+      default:
+        throw new Error('Invalid command');
+    }
   }
 
   private movePlayer(input: KeyInput) {
@@ -43,6 +49,10 @@ class InputHandler {
     this.positionsMap.clear(new ServerPosition(x, y));
     this.positionsMap.set(this.player);
   }
+
+  private click() {
+    throw new Error('Method not implemented.');
+  }
 }
 
-export default InputHandler;
+export default ServerInputHandler;

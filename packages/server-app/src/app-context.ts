@@ -1,12 +1,12 @@
 import { RawData } from 'ws';
 import { Player } from './app/elements';
-import InputHandler from './app/input-handler';
+import ServerInputHandler from './app/server-input-handler';
 import KeyInput from './app/key-input';
 import ServerPosition from './app/utils/server-position';
 import PositionsMap from './app/positions-map';
 
 class AppContext {
-  private inputHandler: InputHandler;
+  private inputHandler: ServerInputHandler;
 
   private player: Player;
 
@@ -16,7 +16,7 @@ class AppContext {
     this.player = new Player(new ServerPosition(100, 100));
     this.positionsMap = new PositionsMap();
     this.positionsMap.set(this.player);
-    this.inputHandler = new InputHandler(this.player, this.positionsMap);
+    this.inputHandler = new ServerInputHandler(this.player, this.positionsMap);
   }
 
   public serialize(): string {
@@ -30,7 +30,7 @@ class AppContext {
       input: KeyInput;
     };
 
-    this.inputHandler.keyPressed(input);
+    this.inputHandler.handle(command, input);
   }
 }
 

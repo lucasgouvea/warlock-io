@@ -1,5 +1,5 @@
 import P5 from 'p5';
-import ClientPosition from '../utils/client-position';
+import ClientPosition from './client-position';
 import Config from '../config';
 
 class RightTriangle {

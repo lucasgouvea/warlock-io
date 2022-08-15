@@ -1,6 +1,6 @@
 import P5 from 'p5';
 
-import RightTriangle from '../drawings/right-triangle';
+import RightTriangle from '../utils/right-triangle';
 import ClientPosition from '../utils/client-position';
 import { Ball } from '../projectiles';
 import { UnitVector } from '../utils';
@@ -12,13 +12,13 @@ class Player extends Element {
 
   private mousePosition: ClientPosition;
 
-  private rightTriangle: RightTriangle;
+  public rightTriangle: RightTriangle;
 
-  private rightTriangle2: RightTriangle;
+  public rightTriangle2: RightTriangle;
 
   private p5: P5;
 
-  private stickPosition: {
+  public stickPosition: {
     position: ClientPosition;
     unitVector: UnitVector;
   };
@@ -125,7 +125,10 @@ class Player extends Element {
       unitVector = { x: -1, y: -1 };
     }
 
-    this.stickPosition = { position: new ClientPosition(stickX, stickY), unitVector };
+    this.stickPosition = {
+      position: new ClientPosition(stickX, stickY),
+      unitVector,
+    };
 
     this.p5.line(op.x, op.y, stickX, stickY);
   }
@@ -146,15 +149,6 @@ class Player extends Element {
       this.mousePosition,
       this.p5,
     );
-  }
-
-  public shoot(): void {
-    const { angleRadians } = this.rightTriangle2;
-    const { position, unitVector } = this.stickPosition;
-
-    const projectile = new Ball(position, angleRadians, unitVector, this.p5);
-
-    this.ballProjectiles.push(projectile);
   }
 
   public getProjectiles(): Ball[] {

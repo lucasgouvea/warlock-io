@@ -33,6 +33,9 @@ class PositionsMap {
     const object = JSON.parse(event.data) as object;
     for (const [key, _cell] of Object.entries(object)) {
       const cell = this.map.get(key);
+      if (_cell.element) {
+        console.log(_cell.element);
+      }
       cell.set(_cell, player);
     }
   }
