@@ -1,10 +1,10 @@
-import Position from '../position';
+import ServerPosition from './server-position';
 import Config from '../../config';
 
 class RightTriangle {
-  public originalPosition: Position;
+  public originalPosition: ServerPosition;
 
-  public targetPosition: Position;
+  public targetPosition: ServerPosition;
 
   public angleRadians: number;
 
@@ -20,7 +20,7 @@ class RightTriangle {
 
   static NINETY_DEGREES_IN_RADIANS = Math.PI / 2;
 
-  constructor(originalPosition: Position, targetPosition: Position) {
+  constructor(originalPosition: ServerPosition, targetPosition: ServerPosition) {
     this.originalPosition = originalPosition;
     this.targetPosition = targetPosition;
     this.adjacentSide = Math.abs(targetPosition.x - originalPosition.x);

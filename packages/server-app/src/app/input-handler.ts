@@ -1,7 +1,7 @@
 import Config from '../config';
 import { Player } from './elements';
 import KeyInput from './key-input';
-import Position from './position';
+import ServerPosition from './utils/server-position';
 import PositionsMap from './positions-map';
 
 class InputHandler {
@@ -39,8 +39,8 @@ class InputHandler {
         break;
     }
 
-    this.player.setPosition(new Position(newX, newY));
-    this.positionsMap.clear(new Position(x, y));
+    this.player.setPosition(new ServerPosition(newX, newY));
+    this.positionsMap.clear(new ServerPosition(x, y));
     this.positionsMap.set(this.player);
   }
 }

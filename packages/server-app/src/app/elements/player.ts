@@ -1,5 +1,5 @@
 import { UnitVector, RightTriangle } from '../utils';
-import Position from '../position';
+import ServerPosition from '../utils/server-position';
 import { Ball } from '../projectiles';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';
@@ -7,14 +7,14 @@ import ElementTypeEnum from './element-type-enum';
 class Player extends Element {
   readonly type = ElementTypeEnum.PLAYER;
 
-  private mousePosition: Position;
+  private mousePosition: ServerPosition;
 
   private rightTriangle: RightTriangle;
 
   private rightTriangle2: RightTriangle;
 
   private stickPosition: {
-    position: Position;
+    position: ServerPosition;
     unitVector: UnitVector;
   };
 
@@ -22,9 +22,9 @@ class Player extends Element {
 
   private ballProjectiles: Ball[];
 
-  constructor(position: Position) {
+  constructor(position: ServerPosition) {
     super(position);
-    this.mousePosition = new Position(0, 0);
+    this.mousePosition = new ServerPosition(0, 0);
     this.rightTriangle = new RightTriangle(
       position,
       this.mousePosition,
@@ -34,17 +34,17 @@ class Player extends Element {
       this.mousePosition,
     );
     this.stickPosition = {
-      position: new Position(0, 0),
+      position: new ServerPosition(0, 0),
       unitVector: { x: 1, y: 1 },
     };
     this.ballProjectiles = [];
   }
 
-  public getMousePosition(): Position {
+  public getMousePosition(): ServerPosition {
     return this.mousePosition;
   }
 
-  public setMousePosition(position: Position) {
+  public setMousePosition(position: ServerPosition) {
     this.mousePosition = position;
     this.rightTriangle = new RightTriangle(
       this.position,
@@ -52,7 +52,7 @@ class Player extends Element {
     );
   }
 
-  public setPosition(position: Position) {
+  public setPosition(position: ServerPosition) {
     this.position = position;
     this.rightTriangle = new RightTriangle(
       this.position,
@@ -81,7 +81,7 @@ class Player extends Element {
         const newY = y + unitVector.y * Math.sin(angleRadians) * 2;
 
         const ball = new Ball(
-          new Position(newX, newY),
+          new ServerPosition(newX, newY),
           angleRadians,
           unitVector,
         );

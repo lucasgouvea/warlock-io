@@ -2,7 +2,7 @@ import { RawData } from 'ws';
 import { Player } from './app/elements';
 import InputHandler from './app/input-handler';
 import KeyInput from './app/key-input';
-import Position from './app/position';
+import ServerPosition from './app/utils/server-position';
 import PositionsMap from './app/positions-map';
 
 class AppContext {
@@ -13,7 +13,7 @@ class AppContext {
   private positionsMap: PositionsMap;
 
   constructor() {
-    this.player = new Player(new Position(100, 100));
+    this.player = new Player(new ServerPosition(100, 100));
     this.positionsMap = new PositionsMap();
     this.positionsMap.set(this.player);
     this.inputHandler = new InputHandler(this.player, this.positionsMap);

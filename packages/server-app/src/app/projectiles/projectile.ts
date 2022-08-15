@@ -1,25 +1,25 @@
-import Position from '../position';
+import ServerPosition from '../utils/server-position';
 import { UnitVector } from '../utils';
 
 abstract class Projectile {
   public angleRadians: number;
 
-  public position: Position;
+  public position: ServerPosition;
 
 
   public unitVector: UnitVector;
 
   constructor(
-    position: Position,
+    position: ServerPosition,
     angleRadians: number,
     unitVector: UnitVector,
   ) {
-    this.position = position || new Position(0, 0);
+    this.position = position || new ServerPosition(0, 0);
     this.angleRadians = angleRadians;
     this.unitVector = unitVector;
   }
 
-  public getPosition(): Position {
+  public getPosition(): ServerPosition {
     return this.position;
   }
 }

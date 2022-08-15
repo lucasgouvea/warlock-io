@@ -1,11 +1,11 @@
 import Config from '../../config';
 import { Element } from '../elements';
-import Position from '../position';
+import ServerPosition from '../utils/server-position';
 import { Projectile } from '../projectiles';
 import RGB from '../utils/rgb';
 
 class Cell {
-  private centerPosition: Position;
+  private centerPosition: ServerPosition;
 
   private element: Element | null;
 
@@ -19,7 +19,7 @@ class Cell {
 
   public y2: number;
 
-  constructor(element: Element | null, centerPosition: Position) {
+  constructor(element: Element | null, centerPosition: ServerPosition) {
     this.centerPosition = centerPosition;
     this.element = element;
     this.rgb = new RGB(255, 255, 255);
