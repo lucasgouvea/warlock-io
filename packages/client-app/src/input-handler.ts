@@ -23,8 +23,8 @@ class InputHandler {
   private movePlayer(input: KeyInput) {
     this.clientWeboscket.send('move', input);
 
-    // TODO: send to server this.player.setPosition(new Position(newX, newY));
-    // TODO: send to server - this.positionsMap.clear(new Position(x, y));
+    // TODO: send to server this.player.setPosition(new ClientPosition(newX, newY));
+    // TODO: send to server - this.positionsMap.clear(new ClientPosition(x, y));
     // TODO: send to server -this.positionsMap.set(this.player);
   }
 }

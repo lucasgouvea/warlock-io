@@ -1,7 +1,7 @@
 import P5 from 'p5';
 
 import Player from './elements/player';
-import Position from './position';
+import ClientPosition from './utils/client-position';
 import Config from './config';
 import InputHandler from './input-handler';
 import Enemy from './elements/enemy';
@@ -33,7 +33,7 @@ class App {
     canvas.parent('sketch-holder');
 
     document.onmousemove = (e) => {
-      const position = new Position(e.x - 440, e.y - 140);
+      const position = new ClientPosition(e.x - 440, e.y - 140);
       this.player.setMousePosition(position);
     };
   }

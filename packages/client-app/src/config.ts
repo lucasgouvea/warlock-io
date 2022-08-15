@@ -1,4 +1,4 @@
-import Position from './position';
+import ClientPosition from './utils/client-position';
 
 class Config {
   static CANVAS_WIDTH = 400;
@@ -7,9 +7,9 @@ class Config {
 
   static GRID_SIZE = 40;
 
-  static INITIAL_POS_PLAYER = new Position(20, 60);
+  static INITIAL_POS_PLAYER = new ClientPosition(20, 60);
 
-  static INITIAL_POS_ENEMY = new Position(100, 100);
+  static INITIAL_POS_ENEMY = new ClientPosition(100, 100);
 
   static TRIANGLE_HIDDEN = true;
 }

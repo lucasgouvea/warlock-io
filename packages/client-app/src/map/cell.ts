@@ -3,11 +3,11 @@ import P5 from 'p5';
 import Config from '../config';
 import { Element, Player } from '../elements';
 import ElementTypeEnum from '../elements/element-type-enum';
-import Position from '../position';
+import ClientPosition from '../utils/client-position';
 import { RGB } from '../utils';
 
 class Cell {
-  public centerPosition: Position;
+  public centerPosition: ClientPosition;
 
   private element: Element | null;
 
@@ -23,7 +23,7 @@ class Cell {
 
   public y2: number;
 
-  constructor(element: Element | null, centerPosition: Position, p5: P5) {
+  constructor(element: Element | null, centerPosition: ClientPosition, p5: P5) {
     this.centerPosition = centerPosition;
     this.x1 = centerPosition.x - Config.GRID_SIZE / 2;
     this.x2 = centerPosition.x + Config.GRID_SIZE / 2;
@@ -64,7 +64,7 @@ class Cell {
       switch (element.type) {
         case ElementTypeEnum.PLAYER:
           this.element = player;
-          player.setPosition(new Position(centerPosition.x, centerPosition.y));
+          player.setPosition(new ClientPosition(centerPosition.x, centerPosition.y));
           break;
         default:
           this.element = element;

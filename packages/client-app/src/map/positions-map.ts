@@ -1,6 +1,6 @@
 import P5 from 'p5';
 
-import Position from '../position';
+import ClientPosition from '../utils/client-position';
 import { Player } from '../elements';
 import Cell from './cell';
 import Config from '../config';
@@ -17,12 +17,12 @@ class PositionsMap {
       for (let y = 0; y < Config.CANVAS_HEIGHT; y += Config.GRID_SIZE) {
         const centerX = x + Config.GRID_SIZE / 2;
         const centerY = y + Config.GRID_SIZE / 2;
-        this.init(new Position(centerX, centerY));
+        this.init(new ClientPosition(centerX, centerY));
       }
     }
   }
 
-  public init(position: Position): void {
+  public init(position: ClientPosition): void {
     this.map.set(
       `${position.x},${position.y}`,
       new Cell(null, position, this.p5),
