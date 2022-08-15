@@ -7,6 +7,7 @@ import WsServer from './ws-server';
 const app = express();
 const context = new AppContext();
 const ws = new WsServer(context);
+
 app.use('/public', express.static('public'));
 
 app.get('/app', (req, res) => {

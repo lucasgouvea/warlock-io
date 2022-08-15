@@ -30,10 +30,7 @@ class WsServer {
     });
 
     wss.on('connection', (ws, message) => {
-      /* const id = ws.url.split('/player?id=')[1]; */
-      ws.on('message', (data) => {
-        console.log('received: %s', data);
-      });
+      ws.on('message', (data) => context.handle(data));
 
       setInterval(() => {
         ws.send(context.serialize());

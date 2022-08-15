@@ -21,26 +21,7 @@ class InputHandler {
   }
 
   private movePlayer(input: KeyInput) {
-    const { x, y } = this.player.getPosition();
-    let newX = x;
-    let newY = y;
-
-    switch (input) {
-      case KeyInput.A:
-        newX -= Config.GRID_SIZE;
-        break;
-      case KeyInput.S:
-        newY += Config.GRID_SIZE;
-        break;
-      case KeyInput.D:
-        newX += Config.GRID_SIZE;
-        break;
-      case KeyInput.W:
-        newY -= Config.GRID_SIZE;
-        break;
-      default:
-        break;
-    }
+    this.clientWeboscket.send('move', input);
 
     // TODO: send to server this.player.setPosition(new Position(newX, newY));
     // TODO: send to server - this.positionsMap.clear(new Position(x, y));
