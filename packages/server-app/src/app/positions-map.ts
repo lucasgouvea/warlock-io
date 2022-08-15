@@ -1,4 +1,4 @@
-import Config from '../config';
+import ServerConfig from '../server-config';
 import Cell from './map/cell';
 import ServerPosition from './utils/server-position';
 import { Element } from './elements';
@@ -8,10 +8,10 @@ class PositionsMap {
 
   constructor() {
     this.map = new Map();
-    for (let x = 0; x < Config.CANVAS_WIDTH; x += Config.GRID_SIZE) {
-      for (let y = 0; y < Config.CANVAS_HEIGHT; y += Config.GRID_SIZE) {
-        const centerX = x + Config.GRID_SIZE / 2;
-        const centerY = y + Config.GRID_SIZE / 2;
+    for (let x = 0; x < ServerConfig.CANVAS_WIDTH; x += ServerConfig.GRID_SIZE) {
+      for (let y = 0; y < ServerConfig.CANVAS_HEIGHT; y += ServerConfig.GRID_SIZE) {
+        const centerX = x + ServerConfig.GRID_SIZE / 2;
+        const centerY = y + ServerConfig.GRID_SIZE / 2;
         this.init(new ServerPosition(centerX, centerY));
       }
     }

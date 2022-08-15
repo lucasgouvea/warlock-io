@@ -1,5 +1,4 @@
 import ServerPosition from './server-position';
-import Config from '../../config';
 
 class RightTriangle {
   public originalPosition: ServerPosition;
@@ -16,8 +15,6 @@ class RightTriangle {
 
   public angularCoeficient: number;
 
-  private hidden: boolean;
-
   static NINETY_DEGREES_IN_RADIANS = Math.PI / 2;
 
   constructor(originalPosition: ServerPosition, targetPosition: ServerPosition) {
@@ -28,7 +25,6 @@ class RightTriangle {
     this.angularCoeficient = this.oppositeSide / this.adjacentSide;
     this.angleRadians = Math.atan(this.angularCoeficient);
     this.angleComplementRadians = RightTriangle.NINETY_DEGREES_IN_RADIANS - this.angleRadians;
-    this.hidden = Config.TRIANGLE_HIDDEN;
   }
 }
 

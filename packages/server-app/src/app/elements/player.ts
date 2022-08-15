@@ -9,9 +9,9 @@ class Player extends Element {
 
   private mousePosition: ServerPosition;
 
-  private rightTriangle: RightTriangle;
+  private rightTriangleForArm: RightTriangle;
 
-  private rightTriangle2: RightTriangle;
+  private rightTriangleForStick: RightTriangle;
 
   private stickPosition: {
     position: ServerPosition;
@@ -25,11 +25,8 @@ class Player extends Element {
   constructor(position: ServerPosition) {
     super(position);
     this.mousePosition = new ServerPosition(0, 0);
-    this.rightTriangle = new RightTriangle(
-      position,
-      this.mousePosition,
-    );
-    this.rightTriangle2 = new RightTriangle(
+    this.rightTriangleForArm = new RightTriangle(position, this.mousePosition);
+    this.rightTriangleForStick = new RightTriangle(
       position,
       this.mousePosition,
     );
@@ -46,7 +43,7 @@ class Player extends Element {
 
   public setMousePosition(position: ServerPosition) {
     this.mousePosition = position;
-    this.rightTriangle = new RightTriangle(
+    this.rightTriangleForArm = new RightTriangle(
       this.position,
       this.mousePosition,
     );
@@ -54,14 +51,14 @@ class Player extends Element {
 
   public setPosition(position: ServerPosition) {
     this.position = position;
-    this.rightTriangle = new RightTriangle(
+    this.rightTriangleForArm = new RightTriangle(
       this.position,
       this.mousePosition,
     );
   }
 
   public shoot(): void {
-    const { angleRadians } = this.rightTriangle2;
+    const { angleRadians } = this.rightTriangleForStick;
     const { position, unitVector } = this.stickPosition;
 
     const projectile = new Ball(position, angleRadians, unitVector);
@@ -89,6 +86,72 @@ class Player extends Element {
         return ball;
       },
     );
+  }
+
+  public setStickPosition(): void {
+    const {
+      angleComplementRadians,
+      adjacentSide,
+      originalPosition: { x, y },
+    } = this.rightTriangleForArm;
+
+    const oppositeSide = Math.tan(angleComplementRadians) * adjacentSide;
+    const hypotenuse = Math.sqrt(adjacentSide ** 2 + oppositeSide ** 2);
+
+    // similarity of triangles
+    const x2 = (this.CIRCLE_RADIUS * oppositeSide) / hypotenuse;
+    const y2 = (this.CIRCLE_RADIUS * adjacentSide) / hypotenuse;
+
+    // why 2?
+    const stickX1 = x + x2 * 2;
+    const stickY1 = y + y2 * 2;
+
+    this.rightTriangleForStick = new RightTriangle(
+      new ServerPosition(stickX1, stickY1),
+      this.mousePosition,
+    );
+
+    const {
+      originalPosition: op,
+      targetPosition: tp,
+      angleRadians: angleRadians2,
+    } = this.rightTriangleForStick;
+
+    // stick length
+    const hypotenuse2 = 45;
+
+    // similarity of triangles again
+    const adjacentSide2 = Math.cos(angleRadians2) * hypotenuse2;
+    const oppositeSide2 = Math.sin(angleRadians2) * hypotenuse2;
+
+    const isTPxGreaterThanOPx = tp.x > op.x;
+    const isTPyGreaterThanOPy = tp.y > op.y;
+
+    const stickX2 = isTPxGreaterThanOPx
+      ? op.x + adjacentSide2
+      : op.x - adjacentSide2;
+    const stickY2 = isTPyGreaterThanOPy
+      ? op.y + oppositeSide2
+      : op.y - oppositeSide2;
+
+    let unitVector: UnitVector = { x: 1, y: 1 };
+
+    if (isTPxGreaterThanOPx && !isTPyGreaterThanOPy) {
+      unitVector = { x: 1, y: -1 };
+    }
+
+    if (!isTPxGreaterThanOPx && isTPyGreaterThanOPy) {
+      unitVector = { x: -1, y: 1 };
+    }
+
+    if (!isTPxGreaterThanOPx && !isTPyGreaterThanOPy) {
+      unitVector = { x: -1, y: -1 };
+    }
+
+    this.stickPosition = {
+      position: new ServerPosition(stickX2, stickY2),
+      unitVector,
+    };
   }
 }
 

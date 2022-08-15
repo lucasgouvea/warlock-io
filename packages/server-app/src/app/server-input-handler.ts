@@ -1,4 +1,4 @@
-import Config from '../config';
+import ServerConfig from "../server-config";
 import { Player } from './elements';
 import KeyInput from './key-input';
 import ServerPosition from './utils/server-position';
@@ -30,16 +30,16 @@ class ServerInputHandler {
 
     switch (input) {
       case KeyInput.A:
-        newX -= Config.GRID_SIZE;
+        newX -= ServerConfig.GRID_SIZE;
         break;
       case KeyInput.S:
-        newY += Config.GRID_SIZE;
+        newY += ServerConfig.GRID_SIZE;
         break;
       case KeyInput.D:
-        newX += Config.GRID_SIZE;
+        newX += ServerConfig.GRID_SIZE;
         break;
       case KeyInput.W:
-        newY -= Config.GRID_SIZE;
+        newY -= ServerConfig.GRID_SIZE;
         break;
       default:
         break;

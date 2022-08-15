@@ -1,4 +1,4 @@
-import Config from '../../config';
+import ServerConfig from '../../server-config';
 import { Element } from '../elements';
 import ServerPosition from '../utils/server-position';
 import { Projectile } from '../projectiles';
@@ -23,10 +23,10 @@ class Cell {
     this.centerPosition = centerPosition;
     this.element = element;
     this.rgb = new RGB(255, 255, 255);
-    this.x1 = centerPosition.x - Config.GRID_SIZE / 2;
-    this.x2 = centerPosition.x + Config.GRID_SIZE / 2;
-    this.y1 = centerPosition.y - Config.GRID_SIZE / 2;
-    this.y2 = centerPosition.y + Config.GRID_SIZE / 2;
+    this.x1 = centerPosition.x - ServerConfig.GRID_SIZE / 2;
+    this.x2 = centerPosition.x + ServerConfig.GRID_SIZE / 2;
+    this.y1 = centerPosition.y - ServerConfig.GRID_SIZE / 2;
+    this.y2 = centerPosition.y + ServerConfig.GRID_SIZE / 2;
   }
 
   public isInside(projectil: Projectile) {
