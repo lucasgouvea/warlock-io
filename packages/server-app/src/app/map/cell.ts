@@ -1,12 +1,12 @@
 import { SharedConfig } from '../../shared';
+import { AbstractElement } from '../../shared/elements';
 import { Position, RGB } from '../../shared/utils';
-import { Element } from '../elements';
 import { Projectile } from '../projectiles';
 
 class Cell {
   private centerPosition: Position;
 
-  private element: Element | null;
+  private element: AbstractElement | null;
 
   private rgb: RGB;
 
@@ -18,7 +18,7 @@ class Cell {
 
   public y2: number;
 
-  constructor(element: Element | null, centerPosition: Position) {
+  constructor(element: AbstractElement | null, centerPosition: Position) {
     this.centerPosition = centerPosition;
     this.element = element;
     this.rgb = new RGB(255, 255, 255);
@@ -42,7 +42,7 @@ class Cell {
     return false;
   }
 
-  public setElement(element: Element | null): void {
+  public setElement(element: AbstractElement | null): void {
     if (element !== null) {
       this.rgb = new RGB(176, 190, 247);
     } else {
@@ -51,7 +51,7 @@ class Cell {
     this.element = element;
   }
 
-  public getElement(): Element | null {
+  public getElement(): AbstractElement | null {
     return this.element;
   }
 }

@@ -5,13 +5,17 @@ import {
   CommandMovePlayer,
   CommandClickData,
   CommandMovePlayerData,
+  CommandMoveMouse,
+  CommandMoveMouseData,
 } from './types';
 
 export {
   AbstractCommand,
-  CommandTypeEnum,
   CommandClick,
-  CommandMovePlayer,
   CommandClickData,
+  CommandMovePlayer,
   CommandMovePlayerData,
+  CommandTypeEnum,
+  CommandMoveMouse,
+  CommandMoveMouseData,
 };

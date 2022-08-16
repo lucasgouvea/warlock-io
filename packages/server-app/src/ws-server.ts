@@ -1,5 +1,5 @@
 import { WebSocketServer } from 'ws';
-import AppContext from './app-context';
+import AppContext from './app/app-context';
 
 class WsServer {
   private readonly perMessageDeflate = {

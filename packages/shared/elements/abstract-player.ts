@@ -1,10 +1,13 @@
-import { Position, RightTriangle, UnitVector } from '../../shared/utils';
-import { Ball } from '../projectiles';
-import Element from './element';
-import ElementTypeEnum from './element-type-enum';
+import { Position, RightTriangle, UnitVector } from '../utils';
 
-class ServerPlayer extends Element {
+import Element from './abstract-element';
+import ElementTypeEnum from './element-type-enum';
+import Stick from './stick';
+
+abstract class Player extends Element {
   readonly type = ElementTypeEnum.PLAYER;
+
+  readonly CIRCLE_RADIUS = 8;
 
   private mousePosition: Position;
 
@@ -12,14 +15,7 @@ class ServerPlayer extends Element {
 
   private rightTriangleForStick: RightTriangle;
 
-  private stickPosition: {
-    position: Position;
-    unitVector: UnitVector;
-  };
-
-  readonly CIRCLE_RADIUS = 8;
-
-  private ballProjectiles: Ball[];
+  private stick: Stick;
 
   constructor(position: Position) {
     super(position);
@@ -29,11 +25,7 @@ class ServerPlayer extends Element {
       position,
       this.mousePosition,
     );
-    this.stickPosition = {
-      position: new Position(0, 0),
-      unitVector: { x: 1, y: 1 },
-    };
-    this.ballProjectiles = [];
+    this.stick = new Stick(new Position(0, 0), new UnitVector(1, 1));
   }
 
   public getMousePosition(): Position {
@@ -46,6 +38,7 @@ class ServerPlayer extends Element {
       this.position,
       this.mousePosition,
     );
+    this.setStick();
   }
 
   public setPosition(position: Position) {
@@ -56,38 +49,7 @@ class ServerPlayer extends Element {
     );
   }
 
-  public shoot(): void {
-    const { angleRadians } = this.rightTriangleForStick;
-    const { position, unitVector } = this.stickPosition;
-
-    const projectile = new Ball(position, angleRadians, unitVector);
-
-    this.ballProjectiles.push(projectile);
-  }
-
-  public getProjectiles(): Ball[] {
-    return this.ballProjectiles;
-  }
-
-  public updateProjectiles(): void {
-    this.ballProjectiles = this.ballProjectiles.map(
-      ({ position, angleRadians, unitVector }) => {
-        const { x, y } = position;
-        const newX = x + unitVector.x * Math.cos(angleRadians) * 2;
-        const newY = y + unitVector.y * Math.sin(angleRadians) * 2;
-
-        const ball = new Ball(
-          new Position(newX, newY),
-          angleRadians,
-          unitVector,
-        );
-
-        return ball;
-      },
-    );
-  }
-
-  public setStickPosition(): void {
+  public setStick(): void {
     const {
       angleComplementRadians,
       adjacentSide,
@@ -101,7 +63,6 @@ class ServerPlayer extends Element {
     const x2 = (this.CIRCLE_RADIUS * oppositeSide) / hypotenuse;
     const y2 = (this.CIRCLE_RADIUS * adjacentSide) / hypotenuse;
 
-    // why 2?
     const stickX1 = x + x2 * 2;
     const stickY1 = y + y2 * 2;
 
@@ -117,7 +78,7 @@ class ServerPlayer extends Element {
     } = this.rightTriangleForStick;
 
     // stick length
-    const hypotenuse2 = 45;
+    const hypotenuse2 = 25;
 
     // similarity of triangles again
     const adjacentSide2 = Math.cos(angleRadians2) * hypotenuse2;
@@ -133,25 +94,28 @@ class ServerPlayer extends Element {
       ? op.y + oppositeSide2
       : op.y - oppositeSide2;
 
-    let unitVector: UnitVector = { x: 1, y: 1 };
+    const unitVector = this.getStickUnitVector(isTPxGreaterThanOPx, isTPyGreaterThanOPy);
+    this.stick = new Stick(new Position(stickX2, stickY2), unitVector);
+  }
 
+  private getStickUnitVector(
+    isTPxGreaterThanOPx: boolean,
+    isTPyGreaterThanOPy: boolean,
+  ) {
     if (isTPxGreaterThanOPx && !isTPyGreaterThanOPy) {
-      unitVector = { x: 1, y: -1 };
+      return new UnitVector(1, -1);
     }
 
     if (!isTPxGreaterThanOPx && isTPyGreaterThanOPy) {
-      unitVector = { x: -1, y: 1 };
+      return new UnitVector(-1, 1);
     }
 
     if (!isTPxGreaterThanOPx && !isTPyGreaterThanOPy) {
-      unitVector = { x: -1, y: -1 };
+      return new UnitVector(-1, -1);
     }
 
-    this.stickPosition = {
-      position: new Position(stickX2, stickY2),
-      unitVector,
-    };
+    return new UnitVector(1, 1);
   }
 }
 
-export default ServerPlayer;
+export default Player;

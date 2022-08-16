@@ -1,6 +1,8 @@
-import {SharedConfig} from '../shared';
-import { ServerPlayer } from './elements';
-import { AbstractCommand, CommandMovePlayerData, CommandTypeEnum } from '../shared/commands';
+import { SharedConfig } from '../shared';
+import ServerPlayer from "./server-player";
+import {
+  AbstractCommand, CommandMovePlayerData, CommandMoveMouseData, CommandTypeEnum,
+} from '../shared/commands';
 import PositionsMap from './positions-map';
 import { Position } from '../shared/utils';
 
@@ -17,6 +19,9 @@ class ServerInputHandler {
     switch (command.type) {
       case CommandTypeEnum.CLICK:
         this.click();
+        break;
+      case CommandTypeEnum.MOVE_MOUSE:
+        this.movePlayerMouse(command.data as CommandMoveMouseData);
         break;
       case CommandTypeEnum.MOVE_PLAYER:
         this.movePlayer(command.data as CommandMovePlayerData);
@@ -51,6 +56,10 @@ class ServerInputHandler {
     this.player.setPosition(new Position(newX, newY));
     this.positionsMap.clear(new Position(x, y));
     this.positionsMap.set(this.player);
+  }
+
+  private movePlayerMouse(input: CommandMoveMouseData): void {
+    this.player.setMousePosition(input as Position);
   }
 
   private click(): void {

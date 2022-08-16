@@ -1,7 +1,7 @@
 import P5 from 'p5';
 
 import ClientPlayer from './elements/client-player';
-import {SharedConfig} from './shared';
+import { SharedConfig } from './shared';
 import ClientInputHandler from './client-input-handler';
 import Enemy from './elements/enemy';
 import ClientWebsocket from './client-websocket';
@@ -35,15 +35,9 @@ class App {
   public setup(p: P5): void {
     const canvas = p.createCanvas(
       SharedConfig.CANVAS_WIDTH,
-      SharedConfig.CANVAS_HEIGHT
+      SharedConfig.CANVAS_HEIGHT,
     );
     canvas.parent('sketch-holder');
-
-    document.onmousemove = (e) => {
-      const position = new Position(e.x - 440, e.y - 140);
-      this.player.setMousePosition(position);
-      // this.clientWeboscket.send('move', {});
-    };
   }
 
   public draw(): void {

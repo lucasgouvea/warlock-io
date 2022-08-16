@@ -1,6 +1,7 @@
 enum CommandTypeEnum {
+  CLICK = 'click',
+  MOVE_MOUSE = 'move_mouse',
   MOVE_PLAYER = 'move',
-  CLICK = 'click'
 }
 
 export default CommandTypeEnum;

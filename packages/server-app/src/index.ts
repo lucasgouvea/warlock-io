@@ -1,6 +1,6 @@
 import express from 'express';
 import { resolve } from 'path';
-import AppContext from './app-context';
+import AppContext from './app/app-context';
 
 import WsServer from './ws-server';
 

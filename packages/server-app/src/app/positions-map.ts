@@ -1,5 +1,5 @@
 import Cell from './map/cell';
-import { Element } from './elements';
+import { AbstractElement } from '../shared/elements';
 import { SharedConfig } from '../shared';
 import { Position } from '../shared/utils';
 
@@ -8,8 +8,16 @@ class PositionsMap {
 
   constructor() {
     this.map = new Map();
-    for (let x = 0; x < SharedConfig.CANVAS_WIDTH; x += SharedConfig.GRID_SIZE) {
-      for (let y = 0; y < SharedConfig.CANVAS_HEIGHT; y += SharedConfig.GRID_SIZE) {
+    for (
+      let x = 0;
+      x < SharedConfig.CANVAS_WIDTH;
+      x += SharedConfig.GRID_SIZE
+    ) {
+      for (
+        let y = 0;
+        y < SharedConfig.CANVAS_HEIGHT;
+        y += SharedConfig.GRID_SIZE
+      ) {
         const centerX = x + SharedConfig.GRID_SIZE / 2;
         const centerY = y + SharedConfig.GRID_SIZE / 2;
         this.init(new Position(centerX, centerY));
@@ -18,10 +26,7 @@ class PositionsMap {
   }
 
   public init(position: Position): void {
-    this.map.set(
-      `${position.x},${position.y}`,
-      new Cell(null, position),
-    );
+    this.map.set(`${position.x},${position.y}`, new Cell(null, position));
   }
 
   public clear({ x, y }: Position): void {
@@ -31,7 +36,7 @@ class PositionsMap {
     }
   }
 
-  public set(element: Element): void {
+  public set(element: AbstractElement): void {
     const { x, y } = element.getPosition();
     const cell = this.map.get(`${x},${y}`);
     if (cell) {
@@ -39,7 +44,7 @@ class PositionsMap {
     }
   }
 
-  public get({ x, y }: Position): Element | null {
+  public get({ x, y }: Position): AbstractElement | null {
     const cell = this.map.get(`${x},${y}`);
     if (cell) {
       return cell.getElement();
