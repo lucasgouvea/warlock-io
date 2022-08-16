@@ -1,6 +1,6 @@
 import P5 from 'p5';
 import { ClientPlayer } from './elements';
-import Cell from './map/cell';
+import Cell from './map/client-cell';
 import PositionsMap from './map/positions-map';
 import { AbstractCommand } from './shared/commands';
 

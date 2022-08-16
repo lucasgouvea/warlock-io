@@ -37,9 +37,9 @@ class ClientInputHandler {
   }
 
   private mouseMoveHandler({ x, y }: MouseEvent) {
-    const position = new Position(x - 440, y - 140);
-    this.player.setMousePosition(position);
-    this.clientWeboscket.send(new CommandMoveMouse({ x, y }));
+    const newX = x - 440;
+    const newY = y - 140;
+    this.clientWeboscket.send(new CommandMoveMouse({ x: newX, y: newY }));
   }
 }
 

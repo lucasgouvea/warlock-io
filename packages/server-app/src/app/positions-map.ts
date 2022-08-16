@@ -1,5 +1,4 @@
-import Cell from './map/cell';
-import { AbstractElement } from '../shared/elements';
+import { AbstractElement, Cell } from '../shared/elements';
 import { SharedConfig } from '../shared';
 import { Position } from '../shared/utils';
 
@@ -47,7 +46,7 @@ class PositionsMap {
   public get({ x, y }: Position): AbstractElement | null {
     const cell = this.map.get(`${x},${y}`);
     if (cell) {
-      return cell.getElement();
+      return cell.element;
     }
     return null;
   }

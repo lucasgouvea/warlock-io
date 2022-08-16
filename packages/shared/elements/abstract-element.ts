@@ -2,7 +2,7 @@ import { Position } from '../utils';
 import ElementTypeEnum from './element-type-enum';
 
 abstract class Element {
-  protected position: Position;
+  public position: Position;
 
   abstract type: ElementTypeEnum;
 

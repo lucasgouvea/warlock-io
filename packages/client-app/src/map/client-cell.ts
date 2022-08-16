@@ -1,36 +1,17 @@
 import P5 from 'p5';
 
 import { SharedConfig } from '../shared';
-import { Element, ClientPlayer } from '../elements';
+import { ClientPlayer } from '../elements';
 import ElementTypeEnum from '../elements/element-type-enum';
 import { Position, RGB } from '../shared/utils';
+import { AbstractElement, Cell } from '../shared/elements';
 
-class Cell {
-  public centerPosition: Position;
-
-  private element: Element | null;
-
+class ClientCell extends Cell {
   private p5: P5;
 
-  private rgb: RGB;
-
-  public x1: number;
-
-  public x2: number;
-
-  public y1: number;
-
-  public y2: number;
-
-  constructor(element: Element | null, centerPosition: Position, p5: P5) {
-    this.centerPosition = centerPosition;
-    this.x1 = centerPosition.x - SharedConfig.GRID_SIZE / 2;
-    this.x2 = centerPosition.x + SharedConfig.GRID_SIZE / 2;
-    this.y1 = centerPosition.y - SharedConfig.GRID_SIZE / 2;
-    this.y2 = centerPosition.y + SharedConfig.GRID_SIZE / 2;
+  constructor(element: AbstractElement, centerPosition: Position, p5: P5) {
+    super(element, centerPosition);
     this.p5 = p5;
-
-    this.element = element;
   }
 
   public draw() {
@@ -60,9 +41,6 @@ class Cell {
       switch (element.type) {
         case ElementTypeEnum.PLAYER:
           this.element = player;
-          player.setPosition(
-            new Position(centerPosition.x, centerPosition.y),
-          );
           break;
         default:
           this.element = element;
@@ -72,4 +50,4 @@ class Cell {
   }
 }
 
-export default Cell;
+export default ClientCell;

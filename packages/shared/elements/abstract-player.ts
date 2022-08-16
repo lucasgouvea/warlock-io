@@ -9,13 +9,13 @@ abstract class Player extends Element {
 
   readonly CIRCLE_RADIUS = 8;
 
-  private mousePosition: Position;
+  public mousePosition: Position;
 
-  private rightTriangleForArm: RightTriangle;
+  public rightTriangleForArm: RightTriangle;
 
-  private rightTriangleForStick: RightTriangle;
+  public rightTriangleForStick: RightTriangle;
 
-  private stick: Stick;
+  public stick: Stick;
 
   constructor(position: Position) {
     super(position);
@@ -25,7 +25,11 @@ abstract class Player extends Element {
       position,
       this.mousePosition,
     );
-    this.stick = new Stick(new Position(0, 0), new UnitVector(1, 1));
+    this.stick = new Stick(
+      new Position(0, 0),
+      new Position(0, 0),
+      new UnitVector(1, 1),
+    );
   }
 
   public getMousePosition(): Position {
@@ -78,7 +82,7 @@ abstract class Player extends Element {
     } = this.rightTriangleForStick;
 
     // stick length
-    const hypotenuse2 = 25;
+    const hypotenuse2 = 45;
 
     // similarity of triangles again
     const adjacentSide2 = Math.cos(angleRadians2) * hypotenuse2;
@@ -94,8 +98,15 @@ abstract class Player extends Element {
       ? op.y + oppositeSide2
       : op.y - oppositeSide2;
 
-    const unitVector = this.getStickUnitVector(isTPxGreaterThanOPx, isTPyGreaterThanOPy);
-    this.stick = new Stick(new Position(stickX2, stickY2), unitVector);
+    const unitVector = this.getStickUnitVector(
+      isTPxGreaterThanOPx,
+      isTPyGreaterThanOPy,
+    );
+    this.stick = new Stick(
+      new Position(stickX1, stickY1),
+      new Position(stickX2, stickY2),
+      unitVector,
+    );
   }
 
   private getStickUnitVector(

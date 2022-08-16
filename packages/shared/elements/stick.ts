@@ -1,12 +1,23 @@
 import { Position, UnitVector } from '../utils';
 
 class Stick {
-  public position: Position;
+  public position: {
+    start: Position;
+    end: Position;
+  };
 
   public unitVector: UnitVector;
 
-  constructor(position: Position, unitVector: UnitVector) {
-    this.position = position;
+  constructor(
+    startPosition: Position,
+    endPosition: Position,
+    unitVector: UnitVector,
+  ) {
+    this.position = {
+      start: startPosition,
+      end: endPosition,
+    };
+
     this.unitVector = unitVector;
   }
 }

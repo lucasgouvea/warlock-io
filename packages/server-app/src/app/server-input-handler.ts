@@ -1,5 +1,5 @@
 import { SharedConfig } from '../shared';
-import ServerPlayer from "./server-player";
+import ServerPlayer from './server-player';
 import {
   AbstractCommand, CommandMovePlayerData, CommandMoveMouseData, CommandTypeEnum,
 } from '../shared/commands';

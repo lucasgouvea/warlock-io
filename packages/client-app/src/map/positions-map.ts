@@ -1,12 +1,13 @@
 import P5 from 'p5';
 
 import { ClientPlayer } from '../elements';
-import Cell from './cell';
+import ClientCell from './client-cell';
 import { SharedConfig } from '../shared';
 import { Position } from '../shared/utils';
+import { AbstractPlayer, Cell, ElementTypeEnum } from '../shared/elements';
 
 class PositionsMap {
-  private map: Map<string, Cell>;
+  private map: Map<string, ClientCell>;
 
   private p5: P5;
 
@@ -33,22 +34,25 @@ class PositionsMap {
   public init(position: Position): void {
     this.map.set(
       `${position.x},${position.y}`,
-      new Cell(null, position, this.p5),
+      new ClientCell(null, position, this.p5),
     );
   }
 
   public parseMap(event: MessageEvent<string>, player: ClientPlayer): void {
-    const object = JSON.parse(event.data) as object;
-    for (const [key, _cell] of Object.entries(object)) {
+    const object = JSON.parse(event.data);
+    for (const [key, _cell] of (Object.entries(object) as [string, Cell][])) {
       const cell = this.map.get(key);
-      if (_cell.element) {
-        console.log(_cell.element);
+      if (_cell?.element?.type === ElementTypeEnum.PLAYER) {
+        const serverPlayer = _cell?.element as AbstractPlayer;
+        player.setPosition(serverPlayer.position);
+        // eslint-disable-next-line no-param-reassign
+        player.stick = serverPlayer.stick;
       }
       cell.set(_cell, player);
     }
   }
 
-  public getMap(): Map<string, Cell> {
+  public getMap(): Map<string, ClientCell> {
     return this.map;
   }
 }

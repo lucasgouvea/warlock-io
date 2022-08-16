@@ -1,14 +1,13 @@
-import { SharedConfig } from '../../shared';
-import { AbstractElement } from '../../shared/elements';
-import { Position, RGB } from '../../shared/utils';
-import { Projectile } from '../projectiles';
+import SharedConfig from '../shared-config';
+import AbstractElement from './abstract-element';
+import { Position, RGB } from '../utils';
 
 class Cell {
-  private centerPosition: Position;
+  public centerPosition: Position;
 
-  private element: AbstractElement | null;
+  public element: AbstractElement | null;
 
-  private rgb: RGB;
+  public rgb: RGB;
 
   public x1: number;
 
@@ -28,20 +27,6 @@ class Cell {
     this.y2 = centerPosition.y + SharedConfig.GRID_SIZE / 2;
   }
 
-  public isInside(projectil: Projectile) {
-    const { x, y } = projectil.getPosition();
-
-    if (
-      this.x2 - x > 0
-      && this.y2 - y > 0
-      && this.x1 - x < 0
-      && this.y1 - y < 0
-    ) {
-      return true;
-    }
-    return false;
-  }
-
   public setElement(element: AbstractElement | null): void {
     if (element !== null) {
       this.rgb = new RGB(176, 190, 247);
@@ -49,10 +34,6 @@ class Cell {
       this.rgb = new RGB(255, 255, 255);
     }
     this.element = element;
-  }
-
-  public getElement(): AbstractElement | null {
-    return this.element;
   }
 }
 
