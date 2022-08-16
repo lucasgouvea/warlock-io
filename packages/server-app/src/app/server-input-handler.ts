@@ -1,8 +1,8 @@
-import ServerConfig from '../server-config';
+import {SharedConfig} from '../shared';
 import { ServerPlayer } from './elements';
 import { AbstractCommand, CommandMovePlayerData, CommandTypeEnum } from '../shared/commands';
-import Position from './utils/server-position';
 import PositionsMap from './positions-map';
+import { Position } from '../shared/utils';
 
 class ServerInputHandler {
   constructor(
@@ -33,16 +33,16 @@ class ServerInputHandler {
 
     switch (input) {
       case CommandMovePlayerData.A:
-        newX -= ServerConfig.GRID_SIZE;
+        newX -= SharedConfig.GRID_SIZE;
         break;
       case CommandMovePlayerData.S:
-        newY += ServerConfig.GRID_SIZE;
+        newY += SharedConfig.GRID_SIZE;
         break;
       case CommandMovePlayerData.D:
-        newX += ServerConfig.GRID_SIZE;
+        newX += SharedConfig.GRID_SIZE;
         break;
       case CommandMovePlayerData.W:
-        newY -= ServerConfig.GRID_SIZE;
+        newY -= SharedConfig.GRID_SIZE;
         break;
       default:
         break;

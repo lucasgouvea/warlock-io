@@ -1,11 +1,9 @@
-import Position from '../utils/server-position';
-import { UnitVector } from '../utils';
+import { Position, UnitVector } from '../../shared/utils';
 
 abstract class Projectile {
   public angleRadians: number;
 
   public position: Position;
-
 
   public unitVector: UnitVector;
 

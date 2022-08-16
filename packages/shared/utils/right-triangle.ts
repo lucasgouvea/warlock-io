@@ -16,13 +16,13 @@ class RightTriangle {
 
   public angularCoeficient: number;
 
-  public p5: P5;
+  public p5: P5 | null;
 
   private hidden: boolean;
 
   static NINETY_DEGREES_IN_RADIANS = Math.PI / 2;
 
-  constructor(originalPosition: Position, targetPosition: Position, p5: P5) {
+  constructor(originalPosition: Position, targetPosition: Position, p5?: P5) {
     this.originalPosition = originalPosition;
     this.targetPosition = targetPosition;
     this.adjacentSide = Math.abs(targetPosition.x - originalPosition.x);
@@ -30,11 +30,14 @@ class RightTriangle {
     this.angularCoeficient = this.oppositeSide / this.adjacentSide;
     this.angleRadians = Math.atan(this.angularCoeficient);
     this.angleComplementRadians = RightTriangle.NINETY_DEGREES_IN_RADIANS - this.angleRadians;
-    this.p5 = p5;
+    this.p5 = p5 || null;
     this.hidden = false;
   }
 
   public draw(): void {
+    if (this.p5 === null) {
+      throw new Error('P5 is null');
+    }
     if (this.hidden !== true) {
       const { x, y } = this.originalPosition;
       const { x: targetX, y: targetY } = this.targetPosition;

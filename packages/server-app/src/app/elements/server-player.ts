@@ -1,5 +1,4 @@
-import { UnitVector, RightTriangle } from '../utils';
-import Position from '../utils/server-position';
+import { Position, RightTriangle, UnitVector } from '../../shared/utils';
 import { Ball } from '../projectiles';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';

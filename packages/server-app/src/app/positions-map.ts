@@ -1,17 +1,17 @@
-import ServerConfig from '../server-config';
 import Cell from './map/cell';
-import Position from './utils/server-position';
 import { Element } from './elements';
+import { SharedConfig } from '../shared';
+import { Position } from '../shared/utils';
 
 class PositionsMap {
   private map: Map<string, Cell>;
 
   constructor() {
     this.map = new Map();
-    for (let x = 0; x < ServerConfig.CANVAS_WIDTH; x += ServerConfig.GRID_SIZE) {
-      for (let y = 0; y < ServerConfig.CANVAS_HEIGHT; y += ServerConfig.GRID_SIZE) {
-        const centerX = x + ServerConfig.GRID_SIZE / 2;
-        const centerY = y + ServerConfig.GRID_SIZE / 2;
+    for (let x = 0; x < SharedConfig.CANVAS_WIDTH; x += SharedConfig.GRID_SIZE) {
+      for (let y = 0; y < SharedConfig.CANVAS_HEIGHT; y += SharedConfig.GRID_SIZE) {
+        const centerX = x + SharedConfig.GRID_SIZE / 2;
+        const centerY = y + SharedConfig.GRID_SIZE / 2;
         this.init(new Position(centerX, centerY));
       }
     }

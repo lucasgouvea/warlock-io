@@ -1,9 +1,9 @@
 import { RawData } from 'ws';
 import { ServerPlayer } from './app/elements';
 import ServerInputHandler from './app/server-input-handler';
-import Position from './app/utils/server-position';
 import PositionsMap from './app/positions-map';
 import AbstractCommand from './shared/commands/abstract-command';
+import { Position } from './shared/utils';
 
 class AppContext {
   private inputHandler: ServerInputHandler;

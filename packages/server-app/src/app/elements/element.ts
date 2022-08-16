@@ -1,4 +1,4 @@
-import Position from '../utils/server-position';
+import { Position } from '../../shared/utils';
 import ElementTypeEnum from './element-type-enum';
 
 abstract class Element {
