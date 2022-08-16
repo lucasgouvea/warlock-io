@@ -1,16 +1,14 @@
 import P5 from 'p5';
 
-import RightTriangle from '../utils/right-triangle';
-import ClientPosition from '../utils/client-position';
+import { Position, RightTriangle, UnitVector } from '../shared/utils';
 import { Ball } from '../projectiles';
-import { UnitVector } from '../utils';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';
 
 class ClientPlayer extends Element {
   readonly type = ElementTypeEnum.PLAYER;
 
-  private mousePosition: ClientPosition;
+  private mousePosition: Position;
 
   public rightTriangle: RightTriangle;
 
@@ -19,7 +17,7 @@ class ClientPlayer extends Element {
   private p5: P5;
 
   public stickPosition: {
-    position: ClientPosition;
+    position: Position;
     unitVector: UnitVector;
   };
 
@@ -27,9 +25,9 @@ class ClientPlayer extends Element {
 
   private ballProjectiles: Ball[];
 
-  constructor(position: ClientPosition, p5: P5) {
+  constructor(position: Position, p5: P5) {
     super(position);
-    this.mousePosition = new ClientPosition(0, 0);
+    this.mousePosition = new Position(0, 0);
     this.p5 = p5;
     this.rightTriangle = new RightTriangle(
       position,
@@ -42,13 +40,13 @@ class ClientPlayer extends Element {
       this.p5,
     );
     this.stickPosition = {
-      position: new ClientPosition(0, 0),
+      position: new Position(0, 0),
       unitVector: { x: 1, y: 1 },
     };
     this.ballProjectiles = [];
   }
 
-  public getMousePosition(): ClientPosition {
+  public getMousePosition(): Position {
     return this.mousePosition;
   }
 
@@ -60,7 +58,7 @@ class ClientPlayer extends Element {
     this.rightTriangle.draw();
   }
 
-  public setMousePosition(position: ClientPosition) {
+  public setMousePosition(position: Position) {
     this.mousePosition = position;
     this.rightTriangle = new RightTriangle(
       this.position,
@@ -69,7 +67,7 @@ class ClientPlayer extends Element {
     );
   }
 
-  public setPosition(position: ClientPosition) {
+  public setPosition(position: Position) {
     this.position = position;
     this.rightTriangle = new RightTriangle(
       this.position,
@@ -90,7 +88,7 @@ class ClientPlayer extends Element {
         const newY = y + unitVector.y * Math.sin(angleRadians) * 2;
 
         const ball = new Ball(
-          new ClientPosition(newX, newY),
+          new Position(newX, newY),
           angleRadians,
           unitVector,
           this.p5,

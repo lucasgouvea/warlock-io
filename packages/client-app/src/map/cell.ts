@@ -1,13 +1,12 @@
 import P5 from 'p5';
 
-import Config from '../config';
+import { SharedConfig } from '../shared';
 import { Element, ClientPlayer } from '../elements';
 import ElementTypeEnum from '../elements/element-type-enum';
-import ClientPosition from '../utils/client-position';
-import { RGB } from '../utils';
+import { Position, RGB } from '../shared/utils';
 
 class Cell {
-  public centerPosition: ClientPosition;
+  public centerPosition: Position;
 
   private element: Element | null;
 
@@ -23,12 +22,12 @@ class Cell {
 
   public y2: number;
 
-  constructor(element: Element | null, centerPosition: ClientPosition, p5: P5) {
+  constructor(element: Element | null, centerPosition: Position, p5: P5) {
     this.centerPosition = centerPosition;
-    this.x1 = centerPosition.x - Config.GRID_SIZE / 2;
-    this.x2 = centerPosition.x + Config.GRID_SIZE / 2;
-    this.y1 = centerPosition.y - Config.GRID_SIZE / 2;
-    this.y2 = centerPosition.y + Config.GRID_SIZE / 2;
+    this.x1 = centerPosition.x - SharedConfig.GRID_SIZE / 2;
+    this.x2 = centerPosition.x + SharedConfig.GRID_SIZE / 2;
+    this.y1 = centerPosition.y - SharedConfig.GRID_SIZE / 2;
+    this.y2 = centerPosition.y + SharedConfig.GRID_SIZE / 2;
     this.p5 = p5;
 
     this.element = element;
@@ -39,7 +38,7 @@ class Cell {
     this.p5.strokeWeight(1);
     const { r, g, b } = this.rgb;
     this.p5.fill(r, g, b);
-    this.p5.square(this.x1, this.y1, Config.GRID_SIZE);
+    this.p5.square(this.x1, this.y1, SharedConfig.GRID_SIZE);
   }
 
   public set(
@@ -62,7 +61,7 @@ class Cell {
         case ElementTypeEnum.PLAYER:
           this.element = player;
           player.setPosition(
-            new ClientPosition(centerPosition.x, centerPosition.y),
+            new Position(centerPosition.x, centerPosition.y),
           );
           break;
         default:

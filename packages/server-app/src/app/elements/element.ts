@@ -1,16 +1,16 @@
-import ServerPosition from '../utils/server-position';
+import Position from '../utils/server-position';
 import ElementTypeEnum from './element-type-enum';
 
 abstract class Element {
-  protected position: ServerPosition;
+  protected position: Position;
 
   abstract type: ElementTypeEnum
 
-  constructor(position?: ServerPosition) {
-    this.position = position || new ServerPosition(0, 0);
+  constructor(position?: Position) {
+    this.position = position || new Position(0, 0);
   }
 
-  public getPosition(): ServerPosition {
+  public getPosition(): Position {
     return this.position;
   }
 }

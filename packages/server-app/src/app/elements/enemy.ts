@@ -1,4 +1,4 @@
-import ServerPosition from '../utils/server-position';
+import Position from '../utils/server-position';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';
 
@@ -7,7 +7,7 @@ class Enemy extends Element {
 
   private hp: number;
 
-  constructor(position: ServerPosition) {
+  constructor(position: Position) {
     super(position);
     this.hp = 10;
   }

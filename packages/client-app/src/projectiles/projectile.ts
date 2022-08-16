@@ -1,12 +1,10 @@
 import P5 from 'p5';
-
-import ClientPosition from '../utils/client-position';
-import { UnitVector } from '../utils';
+import { Position, UnitVector } from '../shared/utils';
 
 abstract class Projectile {
   public angleRadians: number;
 
-  public position: ClientPosition;
+  public position: Position;
 
   protected p5: P5;
 
@@ -15,18 +13,18 @@ abstract class Projectile {
   abstract draw(): void;
 
   constructor(
-    position: ClientPosition,
+    position: Position,
     angleRadians: number,
     unitVector: UnitVector,
     p5: P5,
   ) {
-    this.position = position || new ClientPosition(0, 0);
+    this.position = position || new Position(0, 0);
     this.angleRadians = angleRadians;
     this.unitVector = unitVector;
     this.p5 = p5;
   }
 
-  public getPosition(): ClientPosition {
+  public getPosition(): Position {
     return this.position;
   }
 }

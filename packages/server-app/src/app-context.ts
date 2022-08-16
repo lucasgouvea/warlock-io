@@ -1,7 +1,7 @@
 import { RawData } from 'ws';
 import { ServerPlayer } from './app/elements';
 import ServerInputHandler from './app/server-input-handler';
-import ServerPosition from './app/utils/server-position';
+import Position from './app/utils/server-position';
 import PositionsMap from './app/positions-map';
 import AbstractCommand from './shared/commands/abstract-command';
 
@@ -13,7 +13,7 @@ class AppContext {
   private positionsMap: PositionsMap;
 
   constructor() {
-    this.player = new ServerPlayer(new ServerPosition(100, 100));
+    this.player = new ServerPlayer(new Position(100, 100));
     this.positionsMap = new PositionsMap();
     this.positionsMap.set(this.player);
     this.inputHandler = new ServerInputHandler(this.player, this.positionsMap);

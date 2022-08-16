@@ -1,4 +1,4 @@
-class ClientPosition {
+class Position {
   x: number;
 
   y: number;
@@ -9,4 +9,4 @@ class ClientPosition {
   }
 }
 
-export default ClientPosition;
+export default Position;

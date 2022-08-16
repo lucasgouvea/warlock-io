@@ -1,8 +1,8 @@
 import P5 from 'p5';
-import { ClientPlayer } from '../elements';
-import Cell from '../map/cell';
-import PositionsMap from '../map/positions-map';
-import { AbstractCommand } from '../shared';
+import { ClientPlayer } from './elements';
+import Cell from './map/cell';
+import PositionsMap from './map/positions-map';
+import { AbstractCommand } from './shared/commands';
 
 class ClientWebsocket {
   public positionsMap: PositionsMap;

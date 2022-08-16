@@ -1,4 +1,4 @@
-class ServerPosition {
+class Position {
   x: number;
 
   y: number;
@@ -9,4 +9,4 @@ class ServerPosition {
   }
 }
 
-export default ServerPosition;
+export default Position;

@@ -1,6 +1,6 @@
 import P5 from 'p5';
+import { Position } from '../shared/utils';
 
-import ClientPosition from '../utils/client-position';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';
 
@@ -11,7 +11,7 @@ class Enemy extends Element {
 
   private hp: number;
 
-  constructor(position: ClientPosition, p5: P5) {
+  constructor(position: Position, p5: P5) {
     super(position);
     this.p5 = p5;
     this.hp = 10;

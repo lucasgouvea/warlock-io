@@ -3,7 +3,7 @@ import P5 from 'p5';
 import { ClientPlayer } from './elements';
 import {
   CommandClick, CommandClickData, CommandMovePlayer, CommandMovePlayerData,
-} from './shared';
+} from './shared/commands';
 import ClientWeboscket from './client-websocket';
 
 class ClientInputHandler {

@@ -1,11 +1,11 @@
 import P5 from 'p5';
 
 import ClientPlayer from './elements/client-player';
-import ClientPosition from './utils/client-position';
-import Config from './config';
+import {SharedConfig} from './shared';
 import ClientInputHandler from './client-input-handler';
 import Enemy from './elements/enemy';
 import ClientWebsocket from './client-websocket';
+import { Position } from './shared/utils';
 
 class App {
   private player: ClientPlayer;
@@ -19,8 +19,8 @@ class App {
   public clientWeboscket: ClientWebsocket;
 
   constructor(p5: P5, clientWeboscket: ClientWebsocket) {
-    this.player = new ClientPlayer(Config.INITIAL_POS_PLAYER, p5);
-    this.enemy = new Enemy(Config.INITIAL_POS_ENEMY, p5);
+    this.player = new ClientPlayer(SharedConfig.INITIAL_POS_PLAYER, p5);
+    this.enemy = new Enemy(SharedConfig.INITIAL_POS_ENEMY, p5);
     this.clientWeboscket = clientWeboscket;
     this.clientWeboscket.setPlayer(this.player);
 
@@ -33,11 +33,14 @@ class App {
   }
 
   public setup(p: P5): void {
-    const canvas = p.createCanvas(Config.CANVAS_WIDTH, Config.CANVAS_HEIGHT);
+    const canvas = p.createCanvas(
+      SharedConfig.CANVAS_WIDTH,
+      SharedConfig.CANVAS_HEIGHT
+    );
     canvas.parent('sketch-holder');
 
     document.onmousemove = (e) => {
-      const position = new ClientPosition(e.x - 440, e.y - 140);
+      const position = new Position(e.x - 440, e.y - 140);
       this.player.setMousePosition(position);
       // this.clientWeboscket.send('move', {});
     };

@@ -1,11 +1,10 @@
 import P5 from 'p5';
-import ClientPosition from './client-position';
-import Config from '../config';
+import Position from './position';
 
 class RightTriangle {
-  public originalPosition: ClientPosition;
+  public originalPosition: Position;
 
-  public targetPosition: ClientPosition;
+  public targetPosition: Position;
 
   public angleRadians: number;
 
@@ -23,7 +22,7 @@ class RightTriangle {
 
   static NINETY_DEGREES_IN_RADIANS = Math.PI / 2;
 
-  constructor(originalPosition: ClientPosition, targetPosition: ClientPosition, p5: P5) {
+  constructor(originalPosition: Position, targetPosition: Position, p5: P5) {
     this.originalPosition = originalPosition;
     this.targetPosition = targetPosition;
     this.adjacentSide = Math.abs(targetPosition.x - originalPosition.x);
@@ -32,7 +31,7 @@ class RightTriangle {
     this.angleRadians = Math.atan(this.angularCoeficient);
     this.angleComplementRadians = RightTriangle.NINETY_DEGREES_IN_RADIANS - this.angleRadians;
     this.p5 = p5;
-    this.hidden = Config.TRIANGLE_HIDDEN;
+    this.hidden = false;
   }
 
   public draw(): void {

@@ -1,6 +1,6 @@
 import ServerConfig from '../server-config';
 import Cell from './map/cell';
-import ServerPosition from './utils/server-position';
+import Position from './utils/server-position';
 import { Element } from './elements';
 
 class PositionsMap {
@@ -12,19 +12,19 @@ class PositionsMap {
       for (let y = 0; y < ServerConfig.CANVAS_HEIGHT; y += ServerConfig.GRID_SIZE) {
         const centerX = x + ServerConfig.GRID_SIZE / 2;
         const centerY = y + ServerConfig.GRID_SIZE / 2;
-        this.init(new ServerPosition(centerX, centerY));
+        this.init(new Position(centerX, centerY));
       }
     }
   }
 
-  public init(position: ServerPosition): void {
+  public init(position: Position): void {
     this.map.set(
       `${position.x},${position.y}`,
       new Cell(null, position),
     );
   }
 
-  public clear({ x, y }: ServerPosition): void {
+  public clear({ x, y }: Position): void {
     const cell = this.map.get(`${x},${y}`);
     if (cell) {
       cell.setElement(null);
@@ -39,7 +39,7 @@ class PositionsMap {
     }
   }
 
-  public get({ x, y }: ServerPosition): Element | null {
+  public get({ x, y }: Position): Element | null {
     const cell = this.map.get(`${x},${y}`);
     if (cell) {
       return cell.getElement();

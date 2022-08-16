@@ -1,7 +1,7 @@
 import ServerConfig from '../server-config';
 import { ServerPlayer } from './elements';
-import { AbstractCommand, CommandMovePlayerData, CommandTypeEnum } from '../shared';
-import ServerPosition from './utils/server-position';
+import { AbstractCommand, CommandMovePlayerData, CommandTypeEnum } from '../shared/commands';
+import Position from './utils/server-position';
 import PositionsMap from './positions-map';
 
 class ServerInputHandler {
@@ -48,8 +48,8 @@ class ServerInputHandler {
         break;
     }
 
-    this.player.setPosition(new ServerPosition(newX, newY));
-    this.positionsMap.clear(new ServerPosition(x, y));
+    this.player.setPosition(new Position(newX, newY));
+    this.positionsMap.clear(new Position(x, y));
     this.positionsMap.set(this.player);
   }
 

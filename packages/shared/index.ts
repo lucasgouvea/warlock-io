@@ -1,17 +1,9 @@
-import {
-  CommandTypeEnum,
-  AbstractCommand,
-  CommandClick,
-  CommandMovePlayer,
-  CommandClickData,
-  CommandMovePlayerData,
-} from './commands';
+import * as Commands from './commands';
+import SharedConfig from './shared-config';
+import * as Utils from './utils';
 
 export {
-  CommandTypeEnum,
-  AbstractCommand,
-  CommandClick,
-  CommandMovePlayer,
-  CommandClickData,
-  CommandMovePlayerData,
+  Commands,
+  SharedConfig,
+  Utils,
 };

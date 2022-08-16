@@ -1,5 +1,5 @@
 import { UnitVector, RightTriangle } from '../utils';
-import ServerPosition from '../utils/server-position';
+import Position from '../utils/server-position';
 import { Ball } from '../projectiles';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';
@@ -7,14 +7,14 @@ import ElementTypeEnum from './element-type-enum';
 class ServerPlayer extends Element {
   readonly type = ElementTypeEnum.PLAYER;
 
-  private mousePosition: ServerPosition;
+  private mousePosition: Position;
 
   private rightTriangleForArm: RightTriangle;
 
   private rightTriangleForStick: RightTriangle;
 
   private stickPosition: {
-    position: ServerPosition;
+    position: Position;
     unitVector: UnitVector;
   };
 
@@ -22,26 +22,26 @@ class ServerPlayer extends Element {
 
   private ballProjectiles: Ball[];
 
-  constructor(position: ServerPosition) {
+  constructor(position: Position) {
     super(position);
-    this.mousePosition = new ServerPosition(0, 0);
+    this.mousePosition = new Position(0, 0);
     this.rightTriangleForArm = new RightTriangle(position, this.mousePosition);
     this.rightTriangleForStick = new RightTriangle(
       position,
       this.mousePosition,
     );
     this.stickPosition = {
-      position: new ServerPosition(0, 0),
+      position: new Position(0, 0),
       unitVector: { x: 1, y: 1 },
     };
     this.ballProjectiles = [];
   }
 
-  public getMousePosition(): ServerPosition {
+  public getMousePosition(): Position {
     return this.mousePosition;
   }
 
-  public setMousePosition(position: ServerPosition) {
+  public setMousePosition(position: Position) {
     this.mousePosition = position;
     this.rightTriangleForArm = new RightTriangle(
       this.position,
@@ -49,7 +49,7 @@ class ServerPlayer extends Element {
     );
   }
 
-  public setPosition(position: ServerPosition) {
+  public setPosition(position: Position) {
     this.position = position;
     this.rightTriangleForArm = new RightTriangle(
       this.position,
@@ -78,7 +78,7 @@ class ServerPlayer extends Element {
         const newY = y + unitVector.y * Math.sin(angleRadians) * 2;
 
         const ball = new Ball(
-          new ServerPosition(newX, newY),
+          new Position(newX, newY),
           angleRadians,
           unitVector,
         );
@@ -107,7 +107,7 @@ class ServerPlayer extends Element {
     const stickY1 = y + y2 * 2;
 
     this.rightTriangleForStick = new RightTriangle(
-      new ServerPosition(stickX1, stickY1),
+      new Position(stickX1, stickY1),
       this.mousePosition,
     );
 
@@ -149,7 +149,7 @@ class ServerPlayer extends Element {
     }
 
     this.stickPosition = {
-      position: new ServerPosition(stickX2, stickY2),
+      position: new Position(stickX2, stickY2),
       unitVector,
     };
   }

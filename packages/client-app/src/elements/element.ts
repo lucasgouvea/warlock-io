@@ -1,22 +1,22 @@
-import ClientPosition from '../utils/client-position';
+import { Position } from '../shared/utils';
 import ElementTypeEnum from './element-type-enum';
 
 abstract class Element {
-  protected position: ClientPosition;
+  protected position: Position;
 
   abstract type: ElementTypeEnum;
 
   abstract draw(): void;
 
-  constructor(position?: ClientPosition) {
-    this.position = position || new ClientPosition(0, 0);
+  constructor(position?: Position) {
+    this.position = position || new Position(0, 0);
   }
 
-  public getPosition(): ClientPosition {
+  public getPosition(): Position {
     return this.position;
   }
 
-  public setPosition(position: ClientPosition): void {
+  public setPosition(position: Position): void {
     this.position = position;
   }
 }
