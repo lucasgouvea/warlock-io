@@ -1,44 +1,47 @@
-import ServerConfig from "../server-config";
-import { Player } from './elements';
-import KeyInput from './key-input';
+import ServerConfig from '../server-config';
+import { ServerPlayer } from './elements';
+import { AbstractCommand, CommandMovePlayerData, CommandTypeEnum } from '../shared';
 import ServerPosition from './utils/server-position';
 import PositionsMap from './positions-map';
 
 class ServerInputHandler {
-  constructor(private player: Player, private positionsMap: PositionsMap) {
+  constructor(
+    private player: ServerPlayer,
+    private positionsMap: PositionsMap,
+  ) {
     this.player = player;
     this.positionsMap = positionsMap;
   }
 
-  public handle(command: string, input: KeyInput) {
-    switch (command) {
-      case 'move':
-        this.movePlayer(input);
-        break;
-      case 'click':
+  public handle(command: AbstractCommand<unknown>): void {
+    switch (command.type) {
+      case CommandTypeEnum.CLICK:
         this.click();
+        break;
+      case CommandTypeEnum.MOVE_PLAYER:
+        this.movePlayer(command.data as CommandMovePlayerData);
         break;
       default:
         throw new Error('Invalid command');
     }
   }
 
-  private movePlayer(input: KeyInput) {
+  private movePlayer(input: CommandMovePlayerData): void {
     const { x, y } = this.player.getPosition();
     let newX = x;
     let newY = y;
 
     switch (input) {
-      case KeyInput.A:
+      case CommandMovePlayerData.A:
         newX -= ServerConfig.GRID_SIZE;
         break;
-      case KeyInput.S:
+      case CommandMovePlayerData.S:
         newY += ServerConfig.GRID_SIZE;
         break;
-      case KeyInput.D:
+      case CommandMovePlayerData.D:
         newX += ServerConfig.GRID_SIZE;
         break;
-      case KeyInput.W:
+      case CommandMovePlayerData.W:
         newY -= ServerConfig.GRID_SIZE;
         break;
       default:
@@ -50,7 +53,7 @@ class ServerInputHandler {
     this.positionsMap.set(this.player);
   }
 
-  private click() {
+  private click(): void {
     throw new Error('Method not implemented.');
   }
 }

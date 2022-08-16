@@ -2,3 +2,5 @@ node_modules
 public/app.bundle.js
 dist
 packages/client-app/dist/*
+packages/client-app/src/shared/
+packages/server-app/src/shared/

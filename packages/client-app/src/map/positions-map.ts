@@ -1,7 +1,7 @@
 import P5 from 'p5';
 
 import ClientPosition from '../utils/client-position';
-import { Player } from '../elements';
+import { ClientPlayer } from '../elements';
 import Cell from './cell';
 import Config from '../config';
 
@@ -29,7 +29,7 @@ class PositionsMap {
     );
   }
 
-  public parseMap(event: MessageEvent<string>, player: Player): void {
+  public parseMap(event: MessageEvent<string>, player: ClientPlayer): void {
     const object = JSON.parse(event.data) as object;
     for (const [key, _cell] of Object.entries(object)) {
       const cell = this.map.get(key);

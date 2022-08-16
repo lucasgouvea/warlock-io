@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-new */
 import P5 from 'p5';
-
 import App from './app';
 import ClientWebsocket from './client-websocket';
 
@@ -20,8 +19,8 @@ const sketch = (p5: P5) => {
     app.keyPressed();
   };
 
-  p5.mouseClicked = () => {
-    app.mouseClicked();
+  p5.mouseClicked = (event: MouseEvent) => {
+    app.mouseClicked(event);
   };
 };
 

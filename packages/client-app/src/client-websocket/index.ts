@@ -1,13 +1,13 @@
 import P5 from 'p5';
-import { Player } from '../elements';
-import KeyInput from '../key-input';
+import { ClientPlayer } from '../elements';
 import Cell from '../map/cell';
 import PositionsMap from '../map/positions-map';
+import { AbstractCommand } from '../shared';
 
 class ClientWebsocket {
   public positionsMap: PositionsMap;
 
-  public player: Player;
+  public player: ClientPlayer;
 
   private socket: WebSocket;
 
@@ -23,12 +23,12 @@ class ClientWebsocket {
     return this.positionsMap.getMap();
   }
 
-  public setPlayer(player: Player) {
+  public setPlayer(player: ClientPlayer) {
     this.player = player;
   }
 
-  public send(command: string, input?: KeyInput) {
-    const data = JSON.stringify({ command, input: input || null });
+  public send(command: AbstractCommand<unknown>) {
+    const data = JSON.stringify(command);
     this.socket.send(data);
   }
 }

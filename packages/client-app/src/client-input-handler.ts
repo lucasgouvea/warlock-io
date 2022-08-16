@@ -1,13 +1,15 @@
 import P5 from 'p5';
 
-import { Player } from './elements';
-import KeyInput from './key-input';
+import { ClientPlayer } from './elements';
+import {
+  CommandClick, CommandClickData, CommandMovePlayer, CommandMovePlayerData,
+} from './shared';
 import ClientWeboscket from './client-websocket';
 
 class ClientInputHandler {
   constructor(
     private p5: P5,
-    private player: Player,
+    private player: ClientPlayer,
     private clientWeboscket: ClientWeboscket,
   ) {
     this.p5 = p5;
@@ -16,15 +18,15 @@ class ClientInputHandler {
   }
 
   public keyPressed(): void {
-    this.movePlayer(this.p5.keyCode as KeyInput);
+    this.movePlayer(this.p5.keyCode as CommandMovePlayerData);
   }
 
-  public mouseClicked(): void {
-    this.clientWeboscket.send('clicked');
+  public mouseClicked(data: CommandClickData): void {
+    this.clientWeboscket.send(new CommandClick(data));
   }
 
-  private movePlayer(input: KeyInput): void {
-    this.clientWeboscket.send('move', input);
+  private movePlayer(data: CommandMovePlayerData): void {
+    this.clientWeboscket.send(new CommandMovePlayer(data));
   }
 }
 

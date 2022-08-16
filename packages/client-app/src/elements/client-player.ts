@@ -7,7 +7,7 @@ import { UnitVector } from '../utils';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';
 
-class Player extends Element {
+class ClientPlayer extends Element {
   readonly type = ElementTypeEnum.PLAYER;
 
   private mousePosition: ClientPosition;
@@ -102,4 +102,4 @@ class Player extends Element {
   }
 }
 
-export default Player;
+export default ClientPlayer;

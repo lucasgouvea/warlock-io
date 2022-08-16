@@ -1,7 +1,7 @@
 import P5 from 'p5';
 
 import Config from '../config';
-import { Element, Player } from '../elements';
+import { Element, ClientPlayer } from '../elements';
 import ElementTypeEnum from '../elements/element-type-enum';
 import ClientPosition from '../utils/client-position';
 import { RGB } from '../utils';
@@ -42,15 +42,12 @@ class Cell {
     this.p5.square(this.x1, this.y1, Config.GRID_SIZE);
   }
 
-  public set({
-    centerPosition,
-    element,
-    rgb,
-    x1,
-    x2,
-    y1,
-    y2,
-  }: Cell, player: Player): void {
+  public set(
+    {
+      centerPosition, element, rgb, x1, x2, y1, y2,
+    }: Cell,
+    player: ClientPlayer,
+  ): void {
     this.centerPosition = centerPosition;
     this.rgb = rgb;
     this.x1 = x1;
@@ -64,7 +61,9 @@ class Cell {
       switch (element.type) {
         case ElementTypeEnum.PLAYER:
           this.element = player;
-          player.setPosition(new ClientPosition(centerPosition.x, centerPosition.y));
+          player.setPosition(
+            new ClientPosition(centerPosition.x, centerPosition.y),
+          );
           break;
         default:
           this.element = element;

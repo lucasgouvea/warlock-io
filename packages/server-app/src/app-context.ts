@@ -1,19 +1,19 @@
 import { RawData } from 'ws';
-import { Player } from './app/elements';
+import { ServerPlayer } from './app/elements';
 import ServerInputHandler from './app/server-input-handler';
-import KeyInput from './app/key-input';
 import ServerPosition from './app/utils/server-position';
 import PositionsMap from './app/positions-map';
+import AbstractCommand from './shared/commands/abstract-command';
 
 class AppContext {
   private inputHandler: ServerInputHandler;
 
-  private player: Player;
+  private player: ServerPlayer;
 
   private positionsMap: PositionsMap;
 
   constructor() {
-    this.player = new Player(new ServerPosition(100, 100));
+    this.player = new ServerPlayer(new ServerPosition(100, 100));
     this.positionsMap = new PositionsMap();
     this.positionsMap.set(this.player);
     this.inputHandler = new ServerInputHandler(this.player, this.positionsMap);
@@ -25,12 +25,9 @@ class AppContext {
   }
 
   public handle(data: RawData): void {
-    const { command, input } = JSON.parse(data.toString()) as {
-      command: string;
-      input: KeyInput;
-    };
+    const command = JSON.parse(data.toString()) as AbstractCommand<unknown>;
 
-    this.inputHandler.handle(command, input);
+    this.inputHandler.handle(command);
   }
 }
 

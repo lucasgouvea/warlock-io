@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "npx webpack --mode production",
+    "compile": "npm run compile:shared:client && npm run compile:shared:server",
+    "compile:shared:client": "cp -r packages/shared/. packages/client-app/src/shared",
+    "compile:shared:server": "cp -r packages/shared/. packages/server-app/src/shared",
     "dev": "nodemon --exec npm start -e js,json,ts",
     "server": "node --loader ts-node/esm ./packages/server-app/src/index.ts",
-    "start": "npm run build && npm run server"
+    "start": "npm run compile && npm run build && npm run server"
   },
   "author": "",
   "license": "ISC",
@@ -35,5 +38,9 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "nodemonConfig": {
+    "ext": "ts",
+    "delay": "5"
+  }
 }

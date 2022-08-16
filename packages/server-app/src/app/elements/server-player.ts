@@ -4,7 +4,7 @@ import { Ball } from '../projectiles';
 import Element from './element';
 import ElementTypeEnum from './element-type-enum';
 
-class Player extends Element {
+class ServerPlayer extends Element {
   readonly type = ElementTypeEnum.PLAYER;
 
   private mousePosition: ServerPosition;
@@ -155,4 +155,4 @@ class Player extends Element {
   }
 }
 
-export default Player;
+export default ServerPlayer;

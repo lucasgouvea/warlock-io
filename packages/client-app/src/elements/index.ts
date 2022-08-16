@@ -1,7 +1,5 @@
 import Element from './element';
 import Enemy from './enemy';
-import Player from './player';
+import ClientPlayer from './client-player';
 
-export {
-  Element, Enemy, Player,
-};
+export { Element, Enemy, ClientPlayer };
