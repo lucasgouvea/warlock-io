@@ -19,8 +19,10 @@ class ClientPlayer extends AbstractPlayer {
     const { x: xMouse, y: yMouse } = this.mousePosition;
     const { x: x1, y: y1 } = this.stick.position.start;
     const { x: x2, y: y2 } = this.stick.position.end;
+
+    this.p5.strokeWeight(1);
     this.p5.circle(x, y, 42);
-    this.p5.circle(xMouse, yMouse, this.CIRCLE_RADIUS * 2);
+    this.p5.strokeWeight(5);
     this.p5.line(x1, y1, x2, y2);
   }
 }

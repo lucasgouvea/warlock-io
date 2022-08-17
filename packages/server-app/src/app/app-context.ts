@@ -4,6 +4,7 @@ import ServerInputHandler from './server-input-handler';
 import PositionsMap from './positions-map';
 import AbstractCommand from '../shared/commands/abstract-command';
 import { Position } from '../shared/utils';
+import { AbstractProjectile } from '../shared/elements/projectile';
 
 class AppContext {
   private inputHandler: ServerInputHandler;
@@ -12,15 +13,24 @@ class AppContext {
 
   private positionsMap: PositionsMap;
 
+  private projectiles: AbstractProjectile[];
+
   constructor() {
-    this.player = new ServerPlayer(new Position(100, 100));
     this.positionsMap = new PositionsMap();
+    this.player = new ServerPlayer(new Position(100, 100));
+    this.projectiles = [];
+
+    this.inputHandler = new ServerInputHandler(
+      this.player,
+      this.positionsMap,
+      this.projectiles,
+    );
     this.positionsMap.set(this.player);
-    this.inputHandler = new ServerInputHandler(this.player, this.positionsMap);
   }
 
   public serialize(): string {
     const obj = Object.fromEntries(this.positionsMap.getMap());
+    console.log(this.projectiles);
     return JSON.stringify(obj);
   }
 

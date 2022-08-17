@@ -37,8 +37,8 @@ class ClientInputHandler {
   }
 
   private mouseMoveHandler({ x, y }: MouseEvent) {
-    const newX = x - 440;
-    const newY = y - 140;
+    const newX = x - 440; // canvas offset x
+    const newY = y - 140; // canvas offset y
     this.clientWeboscket.send(new CommandMoveMouse({ x: newX, y: newY }));
   }
 }

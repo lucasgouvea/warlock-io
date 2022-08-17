@@ -5,14 +5,17 @@ import {
 } from '../shared/commands';
 import PositionsMap from './positions-map';
 import { Position } from '../shared/utils';
+import { AbstractProjectile } from '../shared/elements/projectile';
 
 class ServerInputHandler {
   constructor(
     private player: ServerPlayer,
     private positionsMap: PositionsMap,
+    private projectiles: AbstractProjectile[],
   ) {
     this.player = player;
     this.positionsMap = positionsMap;
+    this.projectiles = projectiles;
   }
 
   public handle(command: AbstractCommand<unknown>): void {
@@ -56,6 +59,7 @@ class ServerInputHandler {
     this.player.setPosition(new Position(newX, newY));
     this.positionsMap.clear(new Position(x, y));
     this.positionsMap.set(this.player);
+    this.player.setMousePosition(this.player.mousePosition); // to move stick together
   }
 
   private movePlayerMouse(input: CommandMoveMouseData): void {
@@ -63,7 +67,7 @@ class ServerInputHandler {
   }
 
   private click(): void {
-    throw new Error('Method not implemented.');
+    this.player.shoot(this.projectiles);
   }
 }
 
