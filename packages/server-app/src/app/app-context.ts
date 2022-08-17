@@ -29,9 +29,9 @@ class AppContext {
   }
 
   public serialize(): string {
-    const obj = Object.fromEntries(this.positionsMap.getMap());
-    console.log(this.projectiles);
-    return JSON.stringify(obj);
+    const map = Object.fromEntries(this.positionsMap.getMap());
+    const data = { map, projectiles: this.projectiles };
+    return JSON.stringify(data);
   }
 
   public handle(data: RawData): void {

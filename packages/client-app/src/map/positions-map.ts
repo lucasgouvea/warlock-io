@@ -5,9 +5,13 @@ import ClientCell from './client-cell';
 import { SharedConfig } from '../shared';
 import { Position } from '../shared/utils';
 import { AbstractPlayer, Cell, ElementTypeEnum } from '../shared/elements';
+import { AbstractProjectile } from '../shared/elements/projectile';
+import { ClientBallProjectile } from '../projectiles';
 
 class PositionsMap {
   private map: Map<string, ClientCell>;
+
+  private projectiles: ClientBallProjectile[];
 
   private p5: P5;
 
@@ -38,9 +42,8 @@ class PositionsMap {
     );
   }
 
-  public parseMap(event: MessageEvent<string>, player: ClientPlayer): void {
-    const object = JSON.parse(event.data);
-    for (const [key, _cell] of (Object.entries(object) as [string, Cell][])) {
+  public parseMap(map: object, player: ClientPlayer): void {
+    for (const [key, _cell] of Object.entries(map) as [string, Cell][]) {
       const cell = this.map.get(key);
       if (_cell?.element?.type === ElementTypeEnum.PLAYER) {
         const serverPlayer = _cell?.element as AbstractPlayer;
@@ -52,8 +55,26 @@ class PositionsMap {
     }
   }
 
+  public parseProjectiles(projectiles: AbstractProjectile[]): void {
+    this.projectiles = projectiles.map(
+      ({
+        angleRadians, originElement, position, unitVector,
+      }) => new ClientBallProjectile(
+        angleRadians,
+        originElement,
+        position,
+        unitVector,
+        this.p5,
+      ),
+    );
+  }
+
   public getMap(): Map<string, ClientCell> {
     return this.map;
+  }
+
+  public getProjectiles(): ClientBallProjectile[] {
+    return this.projectiles;
   }
 }
 

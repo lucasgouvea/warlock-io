@@ -41,22 +41,15 @@ class App {
   }
 
   public draw(): void {
-    this.drawMapElements();
-    /*     for (const {
-      position: { x, y },
-    } of this.player.getProjectiles()) {
-      this.p5.circle(x, y, 10);
-    }
-    this.player.updateProjectiles();
-     */
-  }
-
-  private drawMapElements(): void {
     for (const [key, cell] of this.clientWeboscket.getMap()) {
       cell.draw();
     }
 
     this.player.draw();
+
+    for (const projectile of this.clientWeboscket.getProjectiles()) {
+      projectile.draw();
+    }
   }
 
   public keyPressed(): void {

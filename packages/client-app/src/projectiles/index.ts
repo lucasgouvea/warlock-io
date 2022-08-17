@@ -1,6 +1,4 @@
-import Ball from './ball';
-
-import Projectile from './projectile';
+import ClientBallProjectile from './client-ball-projectile';
 
 // eslint-disable-next-line import/prefer-default-export
-export { Projectile, Ball };
+export { ClientBallProjectile };
