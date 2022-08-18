@@ -39,6 +39,14 @@ class AppContext {
 
     this.inputHandler.handle(command);
   }
+
+  public tick(): void {
+    for (const projectile of this.projectiles) {
+      const { position, unitVector, angleRadians } = projectile;
+      position.x += unitVector.x * Math.cos(angleRadians) * 2;
+      position.y += unitVector.y * Math.sin(angleRadians) * 2;
+    }
+  }
 }
 
 export default AppContext;

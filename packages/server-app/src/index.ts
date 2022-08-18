@@ -17,3 +17,7 @@ app.get('/app', (req, res) => {
 app.listen(3000, () => {
   console.log('up');
 });
+
+setInterval(() => {
+  context.tick();
+}, 10);
